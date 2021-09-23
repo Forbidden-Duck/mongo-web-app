@@ -2,7 +2,7 @@
     "name": "mongo-web-app",
     "version": "1.0.0",
     "description": "A MongoDB web application",
-    "main": "./index.js",
+    "main": "./server.js",
     "scripts": {
         "server": "node backend/server",
         "website": "npm run start --prefix frontend",
