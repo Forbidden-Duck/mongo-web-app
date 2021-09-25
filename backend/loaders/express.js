@@ -56,7 +56,7 @@ module.exports = (app) => {
         })
     );
     // Logging
-    app.use(async (req, res, next) => {
+    app.use((req, res, next) => {
         function padString(str, len = 0) {
             while (str.length < len) {
                 str += " ";
