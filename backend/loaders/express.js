@@ -46,7 +46,7 @@ module.exports = (app) => {
         new expressRateLimit({
             store: new mongoRateLimit({
                 uri: `mongodb://${process.env.DBADDRESS}/${process.env.DBHOST}`,
-                collectionName: process.env.DBCOLLECTION,
+                collectionName: "rate-limit",
                 user: process.env.DBUSERNAME,
                 password: process.env.DBPASSWORD,
                 expireTimeMs: rateLimitExpiry,
