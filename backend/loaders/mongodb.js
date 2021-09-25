@@ -13,12 +13,18 @@ module.exports = async () => {
         },
         [Database]
     ).connect();
+    const IPService = new (require("../services/IPService"))();
     return {
         client: MongoClient,
+        services: {
+            IPService,
+        },
     };
 };
 
 /**
  * @typedef {object} MongoType
  * @property {SuperMongo.MongoClient} client
+ * @property {object} services
+ * @property {import("../services/IPService")} services.IPService
  */

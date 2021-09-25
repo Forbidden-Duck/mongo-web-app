@@ -1,23 +1,18 @@
 const { Utils: SuperUtils } = require("@forbidden_duck/super-mongo");
 const createError = require("http-errors");
 const {
-    __schemas: { ips: IPSchema },
     __collections: { ips: IPCollection },
 } = require("../db");
 
 module.exports = class IPService {
-    /**
-     *
-     * @param {IPCollection} ips
-     */
-    constructor(ips) {
-        this.IPCollection = ips;
+    constructor() {
+        this.IPCollection = IPCollection;
     }
 
     /**
      * Find an IP
-     * @param {import("mongodb").Filter<IPSchema>} filter
-     * @returns {Promise<IPSchema>}
+     * @param {import("mongodb").Filter<IPCollection["schema"]>} filter
+     * @returns {Promise<IPCollection["schema"]>}
      */
     async find(filter) {
         try {
@@ -29,8 +24,8 @@ module.exports = class IPService {
 
     /**
      * Create a new IP
-     * @param {IPSchema} data
-     * @returns {Promise<IPSchema>}
+     * @param {IPCollection["schema"]} data
+     * @returns {Promise<IPCollection["schema"]>}
      */
     async create(data) {
         data._id = SuperUtils.ID.create("SHA256");
@@ -53,9 +48,9 @@ module.exports = class IPService {
 
     /**
      * Update an IP
-     * @param {import("mongodb").UpdateFilter<IPSchema>} data
-     * @param {import("mongodb").Filter<IPSchema>} filter
-     * @returns {Promise<IPSchema>}
+     * @param {import("mongodb").UpdateFilter<IPCollection["schema"]>} data
+     * @param {import("mongodb").Filter<IPCollection["schema"]>} filter
+     * @returns {Promise<IPCollection["schema"]>}
      */
     async update(data, filter) {
         // Check the IP exists
