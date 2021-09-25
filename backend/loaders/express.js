@@ -53,6 +53,7 @@ module.exports = (app) => {
             }),
             windowMs: rateLimitExpiry,
             max: 1500,
+            keyGenerator: (req) => req.ip.replace(/((?::))(?:[0-9]+)$/, ""),
         })
     );
     // Logging
