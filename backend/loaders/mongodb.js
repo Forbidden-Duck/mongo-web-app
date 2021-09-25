@@ -17,3 +17,8 @@ module.exports = async () => {
         client: MongoClient,
     };
 };
+
+/**
+ * @typedef {object} MongoType
+ * @property {SuperMongo.MongoClient} client
+ */
