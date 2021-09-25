@@ -4,7 +4,7 @@
     "description": "A MongoDB web application",
     "main": "./server.js",
     "scripts": {
-        "server": "node backend/server",
+        "server": "node server",
         "website": "npm run start --prefix frontend",
         "build": "npm run build --prefix frontend"
     },
