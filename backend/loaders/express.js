@@ -85,8 +85,8 @@ module.exports = (app) => {
                     : 0; // None
             const status = `\x1b[${colour}m${res.statusCode}\x1b[0m`;
             const responseTime =
-                (resStart[0] - reqStart[0]) * 1e3 +
-                (resStart[1] - reqStart[1]) * 1e-6;
+                (responseStart[0] - requestStart[0]) * 1e3 +
+                (responseStart[1] - requestStart[1]) * 1e-6;
 
             const lines = [
                 padString(moment().format("DD/MM/YYYY h:mma"), 18),
