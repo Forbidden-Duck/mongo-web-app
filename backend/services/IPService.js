@@ -60,6 +60,7 @@ module.exports = class IPService {
         }
 
         // Ensure modifiedAt is updated accordingly
+        if (!data.$set) data.$set = {};
         data.$set["modifiedAt"] = new Date();
 
         try {
