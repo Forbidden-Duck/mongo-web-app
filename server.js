@@ -5,11 +5,11 @@ require("dotenv").config(".env");
 
 const app = require("express")();
 const https = require("https"); // For HTTPS protocol server
-// TODO Loaders
+const loaders = require("./backend/loaders");
 const PORT = parseInt(process.env.PORT || 6001);
 
 (async () => {
-    // TODO await loaders
+    await loaders(app);
     if (process.env.PROTOCOL === "https") {
         const fs = require("fs");
         https
