@@ -41,7 +41,7 @@ module.exports = (app) => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cookieParser());
-    app.use("trust proxy", 1);
+    app.set("trust proxy", 1);
     app.use(
         new expressRateLimit({
             store: new mongoRateLimit({
