@@ -9,6 +9,6 @@ module.exports = new Database("mongo-web-app", [
     collections.saveddbs,
 ]);
 
-module.exports.collections = collections;
+module.exports.__collections = collections;
 
-module.exports.schemas = schemas;
+module.exports.__schemas = schemas;
