@@ -5,10 +5,6 @@ const {
 } = require("../db");
 
 module.exports = class IPService {
-    constructor() {
-        this.IPCollection = IPCollection;
-    }
-
     /**
      * Find an IP
      * @param {import("mongodb").Filter<IPCollection["schema"]>} filter
@@ -16,7 +12,7 @@ module.exports = class IPService {
      */
     async find(filter) {
         try {
-            return (await this.IPCollection.find(filter, { limit: 1 }))[0];
+            return (await IPCollection.find(filter, { limit: 1 }))[0];
         } catch (err) {
             throw createError(404, "IP not found");
         }
@@ -33,7 +29,7 @@ module.exports = class IPService {
         data.modifiedAt = null;
 
         try {
-            await this.IPCollection.insertOne(data);
+            await IPCollection.insertOne(data);
         } catch (err) {
             throw createError(500, err.message);
         }
@@ -64,7 +60,7 @@ module.exports = class IPService {
         data.$set["modifiedAt"] = new Date();
 
         try {
-            await this.IPCollection.updateOne(data, filter);
+            await IPCollection.updateOne(data, filter);
         } catch (err) {
             throw createError(500, err.message);
         }
