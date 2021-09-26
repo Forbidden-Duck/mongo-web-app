@@ -12,7 +12,7 @@ module.exports = class UserService {
      */
     async find(filter) {
         try {
-            return (await UserCollection.find(filter, { limit: 1 }))[0];
+            return await UserCollection.findOne(filter);
         } catch (err) {
             throw createError(404, "User not found");
         }

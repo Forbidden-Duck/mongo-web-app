@@ -12,7 +12,7 @@ module.exports = class IPService {
      */
     async find(filter) {
         try {
-            return (await IPCollection.find(filter, { limit: 1 }))[0];
+            return await IPCollection.findOne(filter);
         } catch (err) {
             throw createError(404, "IP not found");
         }
