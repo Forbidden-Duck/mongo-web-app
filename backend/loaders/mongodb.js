@@ -13,6 +13,16 @@ module.exports = async () => {
         },
         [Database]
     ).connect();
+    if (
+        !(await Database.__collections.refresh_tokens.indexExists(
+            "createdAt_1"
+        ))
+    ) {
+        await Database.__collections.refresh_tokens.createIndex(
+            { createdAt: 1 },
+            { expireAfterSeconds: 2592000 }
+        );
+    }
     const IPService = new (require("../services/IPService"))();
     return {
         client: MongoClient,
