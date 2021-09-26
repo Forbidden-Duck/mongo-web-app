@@ -33,6 +33,7 @@
         "mongo-sanitize": "^1.1.0",
         "mongodb": "^4.1.2",
         "nodemailer": "^6.6.5",
+        "nodemailer-sendgrid-transport": "^0.2.0",
         "on-finished": "^2.3.0",
         "on-headers": "^1.0.2",
         "rate-limit-mongo": "^2.3.2"
