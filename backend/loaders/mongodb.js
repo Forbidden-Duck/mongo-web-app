@@ -24,10 +24,12 @@ module.exports = async () => {
         );
     }
     const IPService = new (require("../services/IPService"))();
+    const UserService = new (require("../services/UserService"))();
     return {
         client: MongoClient,
         services: {
             IPService,
+            UserService,
         },
     };
 };
@@ -37,4 +39,5 @@ module.exports = async () => {
  * @property {SuperMongo.MongoClient} client
  * @property {object} services
  * @property {import("../services/IPService")} services.IPService
+ * @property {import("../services/UserService")} services.UserService
  */
