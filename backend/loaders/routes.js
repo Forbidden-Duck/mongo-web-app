@@ -27,6 +27,7 @@ module.exports = (app, Mongo) => {
     });
 
     // TODO Routes
+
     app.use((req, res, next) => {
         if (process.env.NODE_ENV === "production") {
             res.sendFile(
