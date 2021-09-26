@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const path = require("path");
 
 /**
@@ -35,4 +36,33 @@ module.exports = (app, Mongo) => {
             next();
         }
     });
+};
+
+/**
+ * Get the Authorization header
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
+ */
+module.exports.getAuthorization = (req, res, next) => {
+    const authHeader = req.headers["authorization"];
+    if (typeof authHeader === "string" && authHeader.length > 0) {
+        const bearer = authHeader.split(" ")[0];
+        const token = authHeader.split(" ")[1];
+        if (bearer === "Bearer") {
+            return jwt.verify(token, process.env.JWTSECRET, (err, data) => {
+                if (err) {
+                    return res.sendStatus(401);
+                }
+                req.token = token;
+                req.tokenData = data;
+                next();
+            });
+        }
+        return res.sendStatus(
+            400,
+            "Missing Bearer type in authorization header"
+        );
+    }
+    res.sendStatus(400, "Missing authorization header");
 };
