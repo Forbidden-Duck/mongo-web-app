@@ -49,7 +49,7 @@ module.exports = class IPService {
      * @returns {Promise<IPCollection["schema"]>}
      */
     async update(data, filter) {
-        // Check the IP exists
+        // Check the document exists
         const findDoc = await this.find(filter);
         if (!findDoc || findDoc._id === undefined) {
             throw createError(404, "IP not found");
