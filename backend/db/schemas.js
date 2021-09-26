@@ -19,6 +19,8 @@ module.exports.users = {
     username: DataTypes.JSString,
     password: DataTypes.JSString,
     email: DataTypes.JSString,
+    createdAt: DataTypes.JSDate,
+    modifiedAt: DataTypes.JSDate,
 };
 
 module.exports.saveddbs = {
@@ -29,4 +31,6 @@ module.exports.saveddbs = {
     username: DataTypes.JSString,
     password: DataTypes.JSString,
     favourite: DataTypes.JSBoolean,
+    createdAt: DataTypes.JSDate,
+    modifiedAt: DataTypes.JSDate,
 };
