@@ -37,7 +37,7 @@ module.exports = class IPService {
         // Check the document was inserted
         const insertedDoc = await this.find({ _id: data._id });
         if (!insertedDoc || insertedDoc._id === undefined) {
-            throw createError(500, "Failed to find IP after insertion");
+            throw createError(500, "Failed to find the IP after insertion");
         }
         return insertedDoc;
     }
@@ -68,7 +68,7 @@ module.exports = class IPService {
         // Check the document was updated
         const updatedDoc = await this.find(filter);
         if (!updatedDoc || updatedDoc._id === undefined) {
-            throw createError(500, "Failed to find IP after insertion");
+            throw createError(500, "Failed to find the IP after insertion");
         }
         return updatedDoc;
     }
