@@ -18,3 +18,11 @@ module.exports.users = new Collection("users", schemas.users, {
 module.exports.saveddbs = new Collection("saveddbs", schemas.saveddbs, {
     createIfNotExist: true,
 });
+
+module.exports.emailverification = new Collection(
+    "emailverification",
+    schemas.emailverification,
+    {
+        createIfNotExist: true,
+    }
+);

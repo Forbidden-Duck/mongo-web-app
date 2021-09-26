@@ -19,6 +19,7 @@ module.exports.users = {
     username: DataTypes.JSString,
     password: DataTypes.JSString,
     email: DataTypes.JSString,
+    verified: DataTypes.JSBoolean,
     createdAt: DataTypes.JSDate,
     modifiedAt: DataTypes.JSDate,
 };
@@ -33,4 +34,11 @@ module.exports.saveddbs = {
     favourite: DataTypes.JSBoolean,
     createdAt: DataTypes.JSDate,
     modifiedAt: DataTypes.JSDate,
+};
+
+module.exports.emailverification = {
+    _id: DataTypes.Ignore,
+    userid: DataTypes.JSString,
+    token: DataTypes.JSString,
+    createdAt: DataTypes.JSDate,
 };

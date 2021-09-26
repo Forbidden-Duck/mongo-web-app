@@ -7,6 +7,7 @@ module.exports = new Database(process.env.DBCOLLECTION, [
     collections.refresh_tokens,
     collections.users,
     collections.saveddbs,
+    collections.emailverification,
 ]);
 
 module.exports.__collections = collections;
