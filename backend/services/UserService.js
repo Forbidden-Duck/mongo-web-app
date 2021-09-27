@@ -62,6 +62,14 @@ module.exports = class UserService {
      * @returns {Promise<UserCollection["schema"]>}
      */
     async update(data, filter) {
+        // Validate data
+        try {
+            data = SuperUtils.Obj2Schema.compare(data, UserCollection.schema, {
+                strictMode: { strictType: true },
+            });
+        } catch (err) {
+            throw createError(400, "Bad Request");
+        }
         // Check the document exists
         const findDoc = await this.find(filter);
         if (!findDoc || findDoc._id === undefined) {
