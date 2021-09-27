@@ -3,6 +3,7 @@ const createError = require("http-errors");
 const {
     __collections: { users: UserCollection },
 } = require("../db");
+const crypto = require("../crypto");
 
 module.exports = class UserService {
     /**
@@ -96,16 +97,25 @@ module.exports = class UserService {
 
     /**
      * Delete a user
+     * @param {UserCollection["schema"]["password"]} password Password to the specified account
      * @param {import("mongodb").Filter<UserCollection["schema"]>} filter
      * @returns {Promise<boolean>}
      */
-    async delete(filter) {
+    async delete(password, filter) {
         // Check the document exists
         const findDoc = await this.find(filter);
         if (!findDoc || findDoc._id === undefined) {
-            throw createError(404, "IP not found");
+            throw createError(404, "User not found");
         }
 
+        try {
+            // Validate the user's password
+            if (crypto.hash.compare(password, findDoc.password)) {
+                throw createError(401, "Unauthorized");
+            }
+        } catch (err) {
+            throw createError(400, "Missing password");
+        }
         try {
             await UserCollection.deleteOne(filter);
         } catch (err) {
