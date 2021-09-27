@@ -1,9 +1,11 @@
+const express = require("express");
+const apiRoute = express.Router();
 const jwt = require("jsonwebtoken");
 const path = require("path");
 
 /**
  *
- * @param {import("express").Express} app
+ * @param {express.Express} app
  * @param {import("./mongodb").MongoType} Mongo
  */
 module.exports = (app, Mongo) => {
@@ -26,6 +28,7 @@ module.exports = (app, Mongo) => {
         next();
     });
 
+    app.use("/api", apiRoute);
     // TODO Routes
 
     app.use((req, res, next) => {
