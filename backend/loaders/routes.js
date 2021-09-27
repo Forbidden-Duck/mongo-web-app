@@ -48,25 +48,29 @@ module.exports = (app, Mongo) => {
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
  */
-module.exports.getAuthorization = (req, res, next) => {
-    const authHeader = req.headers["authorization"];
-    if (typeof authHeader === "string" && authHeader.length > 0) {
-        const bearer = authHeader.split(" ")[0];
-        const token = authHeader.split(" ")[1];
-        if (bearer === "Bearer") {
-            return jwt.verify(token, process.env.JWTSECRET, (err, data) => {
-                if (err) {
-                    return res.sendStatus(401);
-                }
-                req.token = token;
-                req.tokenData = data;
-                next();
-            });
-        }
-        return res.sendStatus(
-            400,
-            "Missing Bearer type in authorization header"
-        );
-    }
-    res.sendStatus(400, "Missing authorization header");
+module.exports.authorize = (req, res, next) => {
+    // TODO USE COOKIES FOR JWT AND REFRESHTOKEN
+    // req.cookies["session_token"]
+    // req.cookies["refresh_token"]
+    //
+    // const authHeader = req.headers["authorization"];
+    // if (typeof authHeader === "string" && authHeader.length > 0) {
+    //     const bearer = authHeader.split(" ")[0];
+    //     const token = authHeader.split(" ")[1];
+    //     if (bearer === "Bearer") {
+    //         return jwt.verify(token, process.env.JWTSECRET, (err, data) => {
+    //             if (err) {
+    //                 return res.sendStatus(401);
+    //             }
+    //             req.token = token;
+    //             req.tokenData = data;
+    //             next();
+    //         });
+    //     }
+    //     return res.sendStatus(
+    //         400,
+    //         "Missing Bearer type in authorization header"
+    //     );
+    // }
+    // res.sendStatus(400, "Missing authorization header");
 };
