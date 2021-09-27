@@ -1,6 +1,7 @@
 const express = require("express");
 const apiRoute = express.Router();
 const jwt = require("jsonwebtoken");
+const crypto = require("../crypto");
 const path = require("path");
 
 /**
@@ -43,34 +44,88 @@ module.exports = (app, Mongo) => {
 };
 
 /**
- * Get the Authorization header
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- * @param {import("express").NextFunction} next
+ * Authorize the session_token or refresh_token
+ * @param {boolean} endIfFailed
+ * @param {import("./mongodb").MongoType} Mongo
+ * @returns {(req: express.Request, res: express.Response, next: express.NextFunction) => void}
  */
-module.exports.authorize = (req, res, next) => {
-    // TODO USE COOKIES FOR JWT AND REFRESHTOKEN
-    // req.cookies["session_token"]
-    // req.cookies["refresh_token"]
-    //
-    // const authHeader = req.headers["authorization"];
-    // if (typeof authHeader === "string" && authHeader.length > 0) {
-    //     const bearer = authHeader.split(" ")[0];
-    //     const token = authHeader.split(" ")[1];
-    //     if (bearer === "Bearer") {
-    //         return jwt.verify(token, process.env.JWTSECRET, (err, data) => {
-    //             if (err) {
-    //                 return res.sendStatus(401);
-    //             }
-    //             req.token = token;
-    //             req.tokenData = data;
-    //             next();
-    //         });
-    //     }
-    //     return res.sendStatus(
-    //         400,
-    //         "Missing Bearer type in authorization header"
-    //     );
-    // }
-    // res.sendStatus(400, "Missing authorization header");
+module.exports.authorize = (endIfFailed, Mongo) => {
+    endIfFailed = !!endIfFailed;
+    /**
+     * @param {express.Request} req
+     * @param {express.Response} res
+     * @param {express.NextFunction} next
+     * @returns {void}
+     */
+    return (req, res, next) => {
+        /**
+         * Refreshes the refreshtoken otherwise returns false
+         * @param {string} token
+         * @returns {import("../services/AuthService").ReturnLoginType}
+         */
+        async function checkReToken(token) {
+            if (typeof token === "string") {
+                try {
+                    return await Mongo.services.AuthService.refreshtoken(token);
+                } catch (err) {}
+            }
+            return false;
+        }
+        async function onError() {
+            const refreshObj = await checkReToken(reToken);
+            if (refreshObj) {
+                // Set the cookies, based on the returned tokens
+                res.cookie("refresh_token", refreshObj.refreshtoken, {
+                    maxAge: 2.592e9, // 30 days
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === "production",
+                });
+                res.cookie("session_token", refreshObj.token, {
+                    maxAge: 900000,
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === "production",
+                });
+                // Send the data formatted how the JWTs are signed
+                req.authorized = {
+                    ok: true,
+                    data: {
+                        userid: refreshObj.user._id,
+                        userWhenSigned: refreshObj.user,
+                    },
+                };
+                next();
+            } else {
+                // If the refresh failed delete both cookies
+                res.cookie("session_token", "", {
+                    maxAge: 0,
+                    expires: new Date(0),
+                });
+                res.cookie("refresh_token", "", {
+                    maxAge: 0,
+                    expires: new Date(0),
+                });
+                if (endIfFailed) {
+                    res.sendStatus(401);
+                } else {
+                    req.authorized = { ok: false };
+                    next();
+                }
+            }
+        }
+        const jwtToken = req.cookies["session_token"];
+        const reToken = req.cookies["refresh_token"];
+        if (typeof jwtToken === "string") {
+            jwt.verify(jwtToken, crypto.options.jwtkey, (err, data) => {
+                if (err) {
+                    onError();
+                } else {
+                    req.authorized = { ok: true, data: data };
+                    next();
+                }
+            });
+        } else {
+            // If there is no jwtToken, onError will attempt to refresh token anyway
+            onError();
+        }
+    };
 };
