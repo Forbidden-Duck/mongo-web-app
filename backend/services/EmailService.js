@@ -3,12 +3,11 @@ const createError = require("http-errors");
 const {
     __collections: { emailverification: EmailCollection },
 } = require("../db");
-const UserServiceType = require("./UserService");
 
 module.exports = class EmailService {
     /**
      *
-     * @param {UserServiceType} UserService
+     * @param {import("./UserService")} UserService
      */
     constructor(UserService) {
         this.UserService = UserService;
