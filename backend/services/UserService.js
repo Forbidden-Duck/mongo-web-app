@@ -110,11 +110,16 @@ module.exports = class UserService {
 
         try {
             // Validate the user's password
-            if (crypto.hash.compare(password, findDoc.password)) {
+            if (
+                crypto.hash.compare(
+                    crypto.base64.decode(password),
+                    findDoc.password
+                )
+            ) {
                 throw createError(401, "Unauthorized");
             }
         } catch (err) {
-            throw createError(400, "Missing password");
+            throw createError(400, "Bad Request");
         }
         try {
             await UserCollection.deleteOne(filter);
