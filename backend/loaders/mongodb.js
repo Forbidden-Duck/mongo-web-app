@@ -49,11 +49,17 @@ module.exports = async () => {
     const IPService = new (require("../services/IPService"))();
     const UserService = new (require("../services/UserService"))();
     const EmailService = new (require("../services/EmailService"))(UserService);
+    const AuthService = new (require("../services/AuthService"))(
+        UserService,
+        EmailService
+    );
     return {
         client: MongoClient,
         services: {
             IPService,
             UserService,
+            EmailService,
+            AuthService,
         },
     };
 };
@@ -64,4 +70,5 @@ module.exports = async () => {
  * @property {object} services
  * @property {import("../services/IPService")} services.IPService
  * @property {import("../services/UserService")} services.UserService
+ * @property {import("../services/AuthService")} services.AuthService
  */
