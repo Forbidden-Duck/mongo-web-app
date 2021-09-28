@@ -39,7 +39,7 @@ module.exports = class UserService {
      */
     async create(data) {
         data._id = SuperUtils.ID.create("SHA256");
-        data.createdAt = new Date();
+        data.createdAt = new UserCollection.schema.createdAt();
         data.modifiedAt = null;
 
         try {
