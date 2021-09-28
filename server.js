@@ -32,3 +32,8 @@ const PORT = parseInt(process.env.PORT || 6001);
         });
     }
 })();
+
+process.on("SIGINT", () => {
+    console.log("\nShutting down...");
+    process.exit(1);
+});
