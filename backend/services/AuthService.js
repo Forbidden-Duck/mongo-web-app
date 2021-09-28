@@ -146,8 +146,56 @@ module.exports = class AuthService {
         );
         try {
             RefreshTokensCollection.insertOne({
-                _id: SuperUtils.ID.create("SHA256"),
+                _id: reToken,
                 userid: user._id,
+                createdAt: new RefreshTokensCollection.schema.createdAt(),
+            });
+        } catch (err) {
+            throw createError(500, "Internal Server Error");
+        }
+
+        return {
+            user,
+            token: jwtToken,
+            refreshtoken: reToken,
+        };
+    }
+
+    /**
+     * Refresh a users tokens
+     * @param {string} token
+     * @returns {ReturnLoginType}
+     */
+    async refreshtoken(token) {
+        // Find the token
+        const findToken = await this.findRefreshToken({ _id: token });
+        if (!findToken || findToken._id === undefined) {
+            throw createError(404, "Refresh token not found");
+        }
+        // Find the user
+        const findUser = await this.UserService.find({
+            _id: findToken.userid,
+        });
+        if (!findUser || findUser._id === undefined) {
+            throw createError(404, "User not found");
+        }
+
+        // Create the tokens
+        const jwtToken = jwt.sign(
+            {
+                userid: findUser._id,
+                userWhenSigned: findUser,
+            },
+            crypto.options.jwtkey,
+            { algorithm: "HS512", expiresIn: "15m" }
+        );
+        const reToken = crypto.refreshtoken.create(
+            findUser._id + findUser.modifiedAt.toString()
+        );
+        try {
+            RefreshTokensCollection.insertOne({
+                _id: reToken,
+                userid: findUser._id,
                 createdAt: new RefreshTokensCollection.schema.createdAt(),
             });
         } catch (err) {
