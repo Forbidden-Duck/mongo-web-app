@@ -22,7 +22,7 @@ module.exports = class UserService {
     /**
      * Find many users
      * @param {import("mongodb").Filter<UserCollection["schema"]>} filter
-     * @returns {Promise<UserCollection["schema"]>}
+     * @returns {Promise<UserCollection["schema"][]>}
      */
     async findMany(filter) {
         try {
