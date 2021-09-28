@@ -7,6 +7,14 @@ const crypto = require("../crypto");
 
 module.exports = class UserService {
     /**
+     *
+     * @param {import("./DBService")} DBService
+     */
+    constructor(DBService) {
+        this.DBService = DBService;
+    }
+
+    /**
      * Find a user
      * @param {import("mongodb").Filter<UserCollection["schema"]>} filter
      * @returns {Promise<UserCollection["schema"]>}
@@ -129,6 +137,11 @@ module.exports = class UserService {
             await UserCollection.deleteOne(filter);
         } catch (err) {
             throw createError(500, err.message);
+        }
+        // Delete all saveddbs related to the user
+        const findDBs = await this.DBService.findMany({ userid: findDoc._id });
+        for (const db of findDBs) {
+            await this.DBService.delete({ _id: db._id });
         }
 
         // Check the document was deleted
