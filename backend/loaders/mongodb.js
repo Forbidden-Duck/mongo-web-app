@@ -47,16 +47,19 @@ module.exports = async () => {
         );
     }
     const IPService = new (require("../services/IPService"))();
-    const UserService = new (require("../services/UserService"))();
+    const DBService = new (require("../services/DBService"))();
+    const UserService = new (require("../services/UserService"))(DBService);
     const EmailService = new (require("../services/EmailService"))(UserService);
     const AuthService = new (require("../services/AuthService"))(
         UserService,
         EmailService
     );
+    DBService.UserService = UserService;
     return {
         client: MongoClient,
         services: {
             IPService,
+            DBService,
             UserService,
             EmailService,
             AuthService,
@@ -69,6 +72,7 @@ module.exports = async () => {
  * @property {SuperMongo.MongoClient} client
  * @property {object} services
  * @property {import("../services/IPService")} services.IPService
+ * @property {import("../services/DBService")} services.DBService
  * @property {import("../services/UserService")} services.UserService
  * @property {import("../services/EmailService")} services.EmailService
  * @property {import("../services/AuthService")} services.AuthService
