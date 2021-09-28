@@ -65,9 +65,17 @@ module.exports = (app, Mongo) => {
                     username: UserSchema.username,
                     password: UserSchema.password,
                 },
-                { strictMode: { strictType: true } }
+                {
+                    strictMode: {
+                        strictType: true,
+                        strictUndefined: true,
+                        strictNull: true,
+                    },
+                }
             );
-        } catch (err) {}
+        } catch (err) {
+            req.bodyParsed = false;
+        }
         next();
     };
     router.post(
@@ -106,7 +114,6 @@ module.exports = (app, Mongo) => {
                 delete tokenObj.user.password; // Do not send the user's password back
                 res.status(200).send(tokenObj.user);
             } catch (err) {
-                console.log(err.stack);
                 res.status(err.status || 500).send(err.message);
             }
         }

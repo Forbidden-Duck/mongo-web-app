@@ -203,7 +203,7 @@ module.exports = class AuthService {
         }
 
         return {
-            user,
+            user: findUser,
             token: jwtToken,
             refreshtoken: reToken,
         };
