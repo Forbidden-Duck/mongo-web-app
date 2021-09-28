@@ -82,23 +82,17 @@ module.exports = class EmailService {
 
     /**
      * Verify the token is correct
-     * @param {string} userid
      * @param {string} token
      * @returns {Promise<boolean>}
      */
-    async verify(userid, token) {
-        // Check the user exists
-        const findUser = await this.UserService.find({ _id: userid });
-        if (!findUser || findUser._id === undefined) {
-            throw createError(404, "User not found");
-        }
-        const findDoc = await EmailCollection.findOne({ userid, token });
+    async verify(token) {
+        const findDoc = await EmailCollection.findOne({ token });
         const docWasFound = !!(findDoc && findDoc._id);
         if (docWasFound) {
             await EmailCollection.deleteOne({ _id: findDoc._id });
             this.UserService.update(
                 { $set: { verified: true } },
-                { _id: userid }
+                { _id: findDoc.userid }
             );
         }
         return docWasFound;
