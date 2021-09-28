@@ -114,7 +114,7 @@ module.exports = (app, Mongo) => {
         }
     });
 
-    router.put("/verify/:token", async (req, res) => {
+    router.get("/verify/:token", async (req, res) => {
         try {
             const isVerified = await Mongo.services.EmailService.verify(
                 req.params.token
