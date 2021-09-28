@@ -46,6 +46,12 @@ module.exports = class DBService {
      * @returns {Promise<DBCollection["schema"]>}
      */
     async create(data) {
+        // Check user exists
+        const findUser = await this.UserService.find({ _id: data.userid });
+        if (!findUser || findUser._id === undefined) {
+            throw createError(404, "User not found");
+        }
+
         data._id = SuperUtils.ID.create("SHA256");
         data.createdAt = new DBCollection.schema.createdAt();
         data.modifiedAt = null;
@@ -83,6 +89,15 @@ module.exports = class DBService {
         const findDoc = await this.find(filter);
         if (!findDoc || findDoc._id === undefined) {
             throw createError(404, "DB not found");
+        }
+        if (data.$set.userid) {
+            // Check user exists
+            const findUser = await this.UserService.find({
+                _id: data.$set.userid,
+            });
+            if (!findUser || findUser._id === undefined) {
+                throw createError(404, "User not found");
+            }
         }
 
         // Ensure modifiedAt is updated accordingly
