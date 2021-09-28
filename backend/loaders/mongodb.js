@@ -70,5 +70,6 @@ module.exports = async () => {
  * @property {object} services
  * @property {import("../services/IPService")} services.IPService
  * @property {import("../services/UserService")} services.UserService
+ * @property {import("../services/EmailService")} services.EmailService
  * @property {import("../services/AuthService")} services.AuthService
  */
