@@ -90,7 +90,7 @@ module.exports = class UserService {
         // Check the document was updated
         const updatedDoc = await this.find(filter);
         if (!updatedDoc || updatedDoc._id === undefined) {
-            throw createError(500, "Failed to find the IP after insertion");
+            throw createError(500, "Failed to find the user after insertion");
         }
         return updatedDoc;
     }
