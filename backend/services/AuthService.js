@@ -118,15 +118,18 @@ module.exports = class AuthService {
         try {
             // Validate the user's password
             if (
-                crypto.hash.compare(
+                !crypto.hash.compare(
                     crypto.base64.decode(password),
-                    findDoc.password
+                    user.password
                 )
             ) {
                 throw createError(401, "Unauthorized");
             }
         } catch (err) {
-            throw createError(400, "Bad Request");
+            if (err.status) {
+                throw err;
+            }
+            throw createError(400, "Password not encoded with Base64");
         }
 
         // Create the tokens

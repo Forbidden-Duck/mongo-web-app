@@ -71,11 +71,13 @@ module.exports = (app, Mongo) => {
             res.sendStatus(400);
             return;
         }
+        next();
     };
     router.post("/login", loginValidation, async (req, res) => {
         try {
             const loginObj = await Mongo.services.AuthService.login(
-                req.bodyParsed
+                req.bodyParsed.username,
+                req.bodyParsed.password
             );
             res.cookie("refresh_token", loginObj.refreshtoken, {
                 maxAge: 2.592e9, // 30 days
