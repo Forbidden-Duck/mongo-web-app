@@ -66,7 +66,7 @@ module.exports = (app) => {
         }
 
         const requestStart = process.hrtime();
-        let responseStart;
+        let responseStart = [0, 0];
 
         onHeaders(res, () => {
             responseStart = process.hrtime();
