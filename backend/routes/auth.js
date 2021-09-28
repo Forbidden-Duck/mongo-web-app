@@ -67,34 +67,49 @@ module.exports = (app, Mongo) => {
                 },
                 { strictMode: { strictType: true } }
             );
-        } catch (err) {
-            res.sendStatus(400);
-            return;
-        }
+        } catch (err) {}
         next();
     };
-    router.post("/login", loginValidation, async (req, res) => {
-        try {
-            const loginObj = await Mongo.services.AuthService.login(
-                req.bodyParsed.username,
-                req.bodyParsed.password
-            );
-            res.cookie("refresh_token", loginObj.refreshtoken, {
-                maxAge: 2.592e9, // 30 days
-                httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-            });
-            res.cookie("session_token", loginObj.token, {
-                maxAge: 900000, // 15 mins
-                httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-            });
-            delete loginObj.user.password; // Do not send the user's password back
-            res.status(200).send(loginObj.user);
-        } catch (err) {
-            res.status(err.status || 500).send(err.message);
+    router.post(
+        "/login",
+        loginValidation,
+        authorize(false, Mongo),
+        async (req, res) => {
+            try {
+                let tokenObj;
+                const reToken =
+                    await Mongo.services.AuthService.findRefreshToken({
+                        _id: req.cookies["refresh_token"],
+                    });
+                if (req.bodyParsed) {
+                    tokenObj = await Mongo.services.AuthService.login(
+                        req.bodyParsed.username,
+                        req.bodyParsed.password
+                    );
+                } else if (req.authorized.ok && reToken && reToken._id) {
+                    tokenObj = await Mongo.services.AuthService.refreshtoken(
+                        reToken._id
+                    );
+                } else {
+                    return res.sendStatus(400);
+                }
+                res.cookie("refresh_token", tokenObj.refreshtoken, {
+                    maxAge: 2.592e9, // 30 days
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === "production",
+                });
+                res.cookie("session_token", tokenObj.token, {
+                    maxAge: 900000, // 15 mins
+                    httpOnly: true,
+                    secure: process.env.NODE_ENV === "production",
+                });
+                delete tokenObj.user.password; // Do not send the user's password back
+                res.status(200).send(tokenObj.user);
+            } catch (err) {
+                res.status(err.status || 500).send(err.message);
+            }
         }
-    });
+    );
 
     router.post("/logout", authorize(true, Mongo), async (req, res) => {
         try {
