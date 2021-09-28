@@ -106,6 +106,7 @@ module.exports = (app, Mongo) => {
                 delete tokenObj.user.password; // Do not send the user's password back
                 res.status(200).send(tokenObj.user);
             } catch (err) {
+                console.log(err.stack);
                 res.status(err.status || 500).send(err.message);
             }
         }

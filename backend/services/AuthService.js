@@ -142,7 +142,7 @@ module.exports = class AuthService {
             { algorithm: "HS512", expiresIn: "15m" }
         );
         const reToken = crypto.refreshtoken.create(
-            user._id + user.modifiedAt.toString()
+            user._id + new Date().toString()
         );
         try {
             RefreshTokensCollection.insertOne({
@@ -190,7 +190,7 @@ module.exports = class AuthService {
             { algorithm: "HS512", expiresIn: "15m" }
         );
         const reToken = crypto.refreshtoken.create(
-            findUser._id + findUser.modifiedAt.toString()
+            findUser._id + new Date().toString()
         );
         try {
             RefreshTokensCollection.insertOne({
