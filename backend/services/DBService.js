@@ -79,9 +79,13 @@ module.exports = class DBService {
     async update(data, filter) {
         // Validate data
         try {
-            data = SuperUtils.Obj2Schema.compare(data, DBCollection.schema, {
-                strictMode: { strictType: true },
-            });
+            data = SuperUtils.Operations.UpdateFilter(
+                data,
+                DBCollection.schema,
+                {
+                    strictMode: { strictType: true },
+                }
+            );
         } catch (err) {
             throw createError(400, "Bad Request");
         }
