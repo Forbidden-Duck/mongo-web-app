@@ -55,6 +55,7 @@ module.exports = async () => {
         EmailService
     );
     DBService.UserService = UserService;
+    UserService.EmailService = EmailService;
     return {
         client: MongoClient,
         services: {

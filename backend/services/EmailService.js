@@ -25,12 +25,14 @@ module.exports = class EmailService {
             // Check the user exists
             const findUser = await this.UserService.find({ _id: userid });
             if (!findUser || findUser._id === undefined) {
-                throw createError(404, "User not found");
+                reject(createError(404, "User not found"));
+                return;
             }
 
             // Make sure the user isn't verified
             if (findUser.verified) {
-                throw createError(403, "User already verified");
+                reject(createError(403, "User already verified"));
+                return;
             }
             // Delete all verification requests when creating a new one
             await EmailCollection.deleteMany({ userid });
@@ -48,7 +50,7 @@ module.exports = class EmailService {
             try {
                 await EmailCollection.insertOne(data);
             } catch (err) {
-                throw createError(500, err.message);
+                reject(createError(500, err.message));
             }
 
             // Check the document was inserted
@@ -56,10 +58,13 @@ module.exports = class EmailService {
                 _id: data._id,
             });
             if (!insertedDoc || insertedDoc._id === undefined) {
-                throw createError(
-                    500,
-                    "Failed to find the email verification after insertion"
+                reject(
+                    createError(
+                        500,
+                        "Failed to find the email verification after insertion"
+                    )
                 );
+                return;
             }
 
             // Send email

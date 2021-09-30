@@ -31,6 +31,7 @@ module.exports = (app, Mongo) => {
 
     app.use("/api", apiRoute);
     require("../routes/auth")(apiRoute, Mongo);
+    require("../routes/user")(apiRoute, Mongo);
     // TODO Routes
 
     app.use((req, res, next) => {

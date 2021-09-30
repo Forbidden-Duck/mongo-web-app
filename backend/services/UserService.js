@@ -9,9 +9,11 @@ module.exports = class UserService {
     /**
      *
      * @param {import("./DBService")} DBService
+     * @param {import("./EmailService")} EmailService
      */
-    constructor(DBService) {
+    constructor(DBService, EmailService) {
         this.DBService = DBService;
+        this.EmailService = EmailService;
     }
 
     /**
@@ -124,6 +126,11 @@ module.exports = class UserService {
             await UserCollection.updateOne(data, filter);
         } catch (err) {
             throw createError(500, err.message);
+        }
+
+        if (data.$set.email && !findDoc.verified) {
+            // Send a new verification email
+            await this.EmailService.create(findDoc._id);
         }
 
         // Check the document was updated
