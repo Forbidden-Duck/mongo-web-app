@@ -23,9 +23,10 @@ module.exports = (app, Mongo) => {
             });
             if (!findUser || findUser._id === undefined) {
                 res.status(403).send("User account does not exist");
+            } else {
+                delete findUser.password; // Don't send the password back
+                res.status(200).send(findUser);
             }
-            delete findUser.password; // Don't send the password back
-            res.status(200).send(findUser);
         } catch (err) {
             res.status(err.status || 500).send(err.message);
         }
