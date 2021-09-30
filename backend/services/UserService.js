@@ -157,7 +157,7 @@ module.exports = class UserService {
         try {
             // Validate the user's password
             if (
-                crypto.hash.compare(
+                !crypto.hash.compare(
                     crypto.base64.decode(password),
                     findDoc.password
                 )
@@ -165,7 +165,8 @@ module.exports = class UserService {
                 throw createError(401, "Unauthorized");
             }
         } catch (err) {
-            throw createError(400, "Bad Request");
+            if (err.status === 401) throw err;
+            throw createError(400, "Password is not encoded with Base64");
         }
         try {
             await UserCollection.deleteOne(filter);
@@ -180,6 +181,6 @@ module.exports = class UserService {
 
         // Check the document was deleted
         const deletedDoc = await this.find(filter);
-        return !!(deletedDoc && deletedDoc._id);
+        return !!(!deletedDoc || deletedDoc._id === undefined);
     }
 };
