@@ -89,6 +89,32 @@ module.exports = class UserService {
         if (!findDoc || findDoc._id === undefined) {
             throw createError(404, "User not found");
         }
+        // Check to make sure the email and username don't already exist
+        if (data.$set.username) {
+            const findByUsername = await this.find({
+                username: data.$set.username,
+            });
+            if (findByUsername && findByUsername._id) {
+                throw createError(409, "Username already exists");
+            }
+        }
+        if (data.$set.email) {
+            const findByEmail = await this.find({ email: data.$set.email });
+            if (findByEmail && findByEmail._id) {
+                throw createError(409, "Email already exists");
+            }
+        }
+
+        if (data.$set.password) {
+            // Encrypt password
+            try {
+                data.$set.password = crypto.hash.create(
+                    crypto.base64.decode(data.$set.password)
+                );
+            } catch (err) {
+                throw createError(400, "Password is not encoded with Base64");
+            }
+        }
 
         // Ensure modifiedAt is updated accordingly
         if (!data.$set) data.$set = {};
