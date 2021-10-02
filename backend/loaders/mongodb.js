@@ -1,8 +1,6 @@
 const Database = require("../db");
 const SuperMongo = require("@forbidden_duck/super-mongo");
 
-// TODO Services
-
 module.exports = async () => {
     const MongoClient = await new SuperMongo.MongoClient(
         {
