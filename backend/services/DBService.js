@@ -160,6 +160,6 @@ module.exports = class DBService {
 
         // Check the document was deleted
         const deletedDoc = await this.find(filter);
-        return !!(deletedDoc && deletedDoc._id);
+        return !!(!deletedDoc || deletedDoc._id === undefined);
     }
 };
