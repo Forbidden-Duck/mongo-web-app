@@ -59,7 +59,7 @@ module.exports = class DBService {
         if (data.password) {
             // Decode password
             try {
-                data.password = SuperUtils.Base64.decode(data.password);
+                SuperUtils.Base64.decode(data.password);
             } catch (err) {
                 throw createError(400, "Password is not encoded with Base64");
             }
@@ -117,10 +117,10 @@ module.exports = class DBService {
         if (!data.$set) data.$set = {};
         data.$set["modifiedAt"] = new Date();
 
-        if (data.password) {
+        if (data.$set.password) {
             // Decode password
             try {
-                data.password = SuperUtils.Base64.decode(data.password);
+                SuperUtils.Base64.decode(data.$set.password);
             } catch (err) {
                 throw createError(400, "Password is not encoded with Base64");
             }
