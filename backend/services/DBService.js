@@ -61,7 +61,7 @@ module.exports = class DBService {
             try {
                 data.password = SuperUtils.Base64.decode(data.password);
             } catch (err) {
-                throw createError(400, "Password was not encoded with Base64");
+                throw createError(400, "Password is not encoded with Base64");
             }
         }
 
@@ -122,7 +122,7 @@ module.exports = class DBService {
             try {
                 data.password = SuperUtils.Base64.decode(data.password);
             } catch (err) {
-                throw createError(400, "Password was not encoded with Base64");
+                throw createError(400, "Password is not encoded with Base64");
             }
         }
 
