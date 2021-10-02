@@ -56,6 +56,15 @@ module.exports = class DBService {
         data.createdAt = new DBCollection.schema.createdAt();
         data.modifiedAt = null;
 
+        if (data.password) {
+            // Decode password
+            try {
+                data.password = SuperUtils.Base64.decode(data.password);
+            } catch (err) {
+                throw createError(400, "Password was not encoded with Base64");
+            }
+        }
+
         try {
             await DBCollection.insertOne(data);
         } catch (err) {
@@ -107,6 +116,15 @@ module.exports = class DBService {
         // Ensure modifiedAt is updated accordingly
         if (!data.$set) data.$set = {};
         data.$set["modifiedAt"] = new Date();
+
+        if (data.password) {
+            // Decode password
+            try {
+                data.password = SuperUtils.Base64.decode(data.password);
+            } catch (err) {
+                throw createError(400, "Password was not encoded with Base64");
+            }
+        }
 
         try {
             await DBCollection.updateOne(data, filter);
