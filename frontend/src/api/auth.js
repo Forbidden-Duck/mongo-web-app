@@ -23,3 +23,11 @@ export const logout = async () => {
         throw err.response.data;
     }
 };
+
+export const verify = async (token) => {
+    try {
+        return (await API.get(`auth/verify/${token}`)).data;
+    } catch (err) {
+        throw err.response.data;
+    }
+};
