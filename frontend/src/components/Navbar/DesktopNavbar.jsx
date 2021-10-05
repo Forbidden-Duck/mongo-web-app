@@ -73,9 +73,9 @@ function DesktopNavbar() {
     const handleMenuLogout = async () => {
         handleMenuClose();
         await dispatch(logoutUser());
-        history.push("/11");
+        history.push("/");
     };
-    const handleLogoClick = () => history.push("/");
+    const handleLogoClick = () => history.replace("/");
 
     return (
         <AppBar position="static">
