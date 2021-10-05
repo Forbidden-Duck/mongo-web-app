@@ -31,10 +31,6 @@ function DesktopNavbar() {
             background: "#fff",
             color: "#2f2f2f",
         },
-        toolbarTitle: {
-            display: "flex",
-            alignItems: "center",
-        },
         buttonHover: {
             "&:hover": {
                 color: "#8f8f8f !important",
