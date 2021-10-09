@@ -1,6 +1,7 @@
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import "./index.css";
 
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
@@ -12,6 +13,7 @@ console.log("Hello, welcome to the console...");
 
 const store = configureStore({ reducer: reducer });
 const theme = createTheme({});
+
 ReactDOM.render(
     <StrictMode>
         <Provider store={store}>
