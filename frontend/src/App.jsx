@@ -12,6 +12,7 @@ import MobileNavbar from "./components/Navbar/MobileNavbar";
 
 // Routes
 import Home from "./routes/Home/Home";
+import Login from "./routes/Login/Login";
 
 import { useMediaQuery } from "@mui/material";
 
@@ -19,16 +20,15 @@ function App() {
     const isMobile640 = useMediaQuery("(max-width:640px)");
 
     return (
-        <div>
-            <Router>
-                {isMobile640 ? <MobileNavbar /> : <DesktopNavbar />}
-                <Switch>
-                    <Route exact path="/" component={Home} />
+        <Router>
+            {isMobile640 ? <MobileNavbar /> : <DesktopNavbar />}
+            <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
 
-                    <Redirect from="*" to="/" />
-                </Switch>
-            </Router>
-        </div>
+                <Redirect from="*" to="/" />
+            </Switch>
+        </Router>
     );
 }
 
