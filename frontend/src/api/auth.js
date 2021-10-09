@@ -1,4 +1,5 @@
 import API from "./";
+import { Utils } from "@forbidden_duck/super-mongo";
 
 export const register = async (data) => {
     try {
@@ -10,6 +11,9 @@ export const register = async (data) => {
 
 export const login = async (data) => {
     try {
+        data.password = !!data.password
+            ? Utils.Base64.encode(data.password)
+            : data.password;
         return (await API.post("auth/login", data)).data;
     } catch (err) {
         throw err.response.data;
