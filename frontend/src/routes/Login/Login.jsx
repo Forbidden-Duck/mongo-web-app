@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useHistory, useLocation } from "react-router";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
     Typography,
@@ -33,6 +33,10 @@ function Login() {
         card: {
             width: "400px",
             padding: "15px",
+        },
+        clearLink: {
+            color: "#558db5",
+            textDecoration: "none",
         },
     }))();
 
@@ -141,6 +145,13 @@ function Login() {
                                 variant="body2"
                             >
                                 {!!error && formatError(error)}
+                            </Typography>
+                            <Typography
+                                className={classes.clearLink}
+                                component={Link}
+                                to={`/register${location.search}`}
+                            >
+                                Sign up instead?
                             </Typography>
                         </CardContent>
                         <CardActions>
