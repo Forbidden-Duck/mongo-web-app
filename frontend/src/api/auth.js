@@ -3,6 +3,9 @@ import { Utils } from "@forbidden_duck/super-mongo";
 
 export const register = async (data) => {
     try {
+        data.password = !!data.password
+            ? Utils.Base64.encode(data.password)
+            : data.password;
         return (await API.post("auth/register", data)).data;
     } catch (err) {
         throw err.response.data;
