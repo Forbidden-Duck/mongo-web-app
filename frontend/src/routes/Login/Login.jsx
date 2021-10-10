@@ -150,7 +150,7 @@ function Login() {
                                 color="primary"
                                 type="submit"
                                 isLoading={isPending}
-                                fullWidth="true"
+                                fullWidth={true}
                                 size="large"
                                 progressVariant="error"
                             >
