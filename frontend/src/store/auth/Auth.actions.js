@@ -5,14 +5,14 @@ export const registerUser = createAsyncThunk(
     "auth/registerUser",
     async (data) => {
         return {
-            user: await authAPI.register(data),
+            user: await authAPI.register({ ...data }),
         };
     }
 );
 
 export const loginUser = createAsyncThunk("auth/loginUser", async (data) => {
     return {
-        user: await authAPI.login(data),
+        user: await authAPI.login({ ...data }),
     };
 });
 
