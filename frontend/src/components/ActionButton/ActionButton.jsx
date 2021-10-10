@@ -7,6 +7,7 @@ import { Button, CircularProgress } from "@mui/material";
  */
 function ActionButton(props) {
     const { children, progressVariant, isLoading, ...rest } = props;
+    rest.disabled = !!isLoading;
     return (
         <Button {...rest}>
             {isLoading ? (
