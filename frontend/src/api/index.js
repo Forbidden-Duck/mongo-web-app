@@ -1,5 +1,5 @@
 import axios from "axios";
 axios.defaults.withCredentials = true;
 export default axios.create({
-    baseURL: "api/",
+    baseURL: `${process.env.REACT_APP_PROXYURL || ""}api/`,
 });
