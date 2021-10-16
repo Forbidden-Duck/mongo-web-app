@@ -54,6 +54,28 @@ const authSlice = createSlice({
                 state.error = message || true;
             })
 
+            // Register and Login pending
+            .addCase(authActions.registerAndLogin.pending, (state) => {
+                state.isPending = true;
+            })
+            // Register and Login fulfilled
+            .addCase(
+                authActions.registerAndLogin.fulfilled,
+                (state, action) => {
+                    const { user } = action.payload;
+                    state.isPending = false;
+                    state.error = null;
+                    state.isAuthenticated = true;
+                    state.userid = user._id;
+                }
+            )
+            // Register and Login rejected
+            .addCase(authActions.registerAndLogin.rejected, (state, action) => {
+                const { message } = action.error;
+                state.isPending = false;
+                state.error = message || true;
+            })
+
             // Logout pending
             .addCase(authActions.logoutUser.pending, (state) => {
                 state.isPending = true;
