@@ -14,6 +14,7 @@ import MobileNavbar from "./components/Navbar/MobileNavbar";
 import Home from "./routes/Home/Home";
 import Login from "./routes/Login/Login";
 import Register from "./routes/Register/Register";
+import VerifyEmail from "./routes/VerifyEmail/VerifyEmail";
 
 import { useMediaQuery } from "@mui/material";
 
@@ -27,6 +28,7 @@ function App() {
                 <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/verify/:token" component={VerifyEmail} />
 
                 <Redirect from="*" to="/" />
             </Switch>
