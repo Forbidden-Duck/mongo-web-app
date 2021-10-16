@@ -13,6 +13,7 @@ import MobileNavbar from "./components/Navbar/MobileNavbar";
 // Routes
 import Home from "./routes/Home/Home";
 import Login from "./routes/Login/Login";
+import Register from "./routes/Register/Register";
 
 import { useMediaQuery } from "@mui/material";
 
@@ -25,6 +26,7 @@ function App() {
             <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
 
                 <Redirect from="*" to="/" />
             </Switch>
