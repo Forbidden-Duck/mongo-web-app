@@ -59,12 +59,21 @@ function Register() {
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPassword = () => setShowPassword(!showPassword);
 
+    // Handle redirect
+    const [loggedin, setLoggedIn] = useState(false);
+    useEffect(() => {
+        if (loggedin && !error && !isPending) {
+            history.push("/");
+        }
+    }, [loggedin, error, isPending]);
+
     const handleRegister = async (creds, { setFieldValue }) => {
         delete creds.confirmPassword;
         if (isAuthenticated) {
             await dispatch(registerUser(creds));
         } else {
             await dispatch(registerAndLogin(creds));
+            setLoggedIn(true);
         }
         // Reset form
         if (setFieldValue) {
