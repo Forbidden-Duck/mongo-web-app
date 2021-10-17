@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
     AppBar,
@@ -59,6 +59,7 @@ function MobileNavbar() {
     }))();
 
     const history = useHistory();
+    const location = useLocation();
     const dispatch = useDispatch();
     const { isAuthenticated } = useSelector((state) => state.auth);
 
@@ -68,7 +69,6 @@ function MobileNavbar() {
     const handleDrawerLogout = async () => {
         handleDrawer(false);
         await dispatch(logoutUser());
-        history.push("/");
     };
     const handleLogoClick = () => history.replace("/");
 
@@ -96,7 +96,7 @@ function MobileNavbar() {
                                     <MenuItem
                                         onClick={() => handleDrawer(false)}
                                         component={Link}
-                                        to="/login"
+                                        to={`/login${location.search}`}
                                     >
                                         <Typography>
                                             <FontAwesomeIcon
@@ -108,7 +108,7 @@ function MobileNavbar() {
                                     <MenuItem
                                         onClick={() => handleDrawer(false)}
                                         component={Link}
-                                        to="/register"
+                                        to={`/register${location.search}`}
                                     >
                                         <Typography>
                                             <FontAwesomeIcon

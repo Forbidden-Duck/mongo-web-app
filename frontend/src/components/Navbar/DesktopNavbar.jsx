@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
     AppBar,
@@ -59,6 +59,7 @@ function DesktopNavbar() {
     }))();
 
     const history = useHistory();
+    const location = useLocation();
     const dispatch = useDispatch();
     const { isAuthenticated } = useSelector((state) => state.auth);
 
@@ -69,7 +70,6 @@ function DesktopNavbar() {
     const handleMenuLogout = async () => {
         handleMenuClose();
         await dispatch(logoutUser());
-        history.push("/");
     };
     const handleLogoClick = () => history.replace("/");
 
@@ -83,14 +83,14 @@ function DesktopNavbar() {
                             <Typography
                                 className={`${classes.clearText} ${classes.buttonHover}`}
                                 component={Link}
-                                to="/login"
+                                to={`/login${location.search}`}
                             >
                                 Login
                             </Typography>
                             <Typography
                                 className={`${classes.clearText} ${classes.buttonHover}`}
                                 component={Link}
-                                to="/register"
+                                to={`/register${location.search}`}
                             >
                                 Register
                             </Typography>
