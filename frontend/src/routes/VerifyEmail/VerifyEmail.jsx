@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Typography, CircularProgress, Button } from "@mui/material";
+import { Typography, CircularProgress } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import { clearError, verifyToken } from "../../store/auth/Auth.actions";

@@ -12,7 +12,6 @@ import {
 import { makeStyles } from "@mui/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faUserCircle,
     faCog,
     faUserPlus,
     faSignInAlt,

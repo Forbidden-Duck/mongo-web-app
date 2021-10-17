@@ -19,7 +19,7 @@ export const loginUser = createAsyncThunk("auth/loginUser", async (data) => {
 export const registerAndLogin = createAsyncThunk(
     "auth/registerAndLoginUser",
     async (data) => {
-        const user = await authAPI.register({ ...data });
+        await authAPI.register({ ...data });
         return {
             user: await authAPI.login({
                 username: data.username,

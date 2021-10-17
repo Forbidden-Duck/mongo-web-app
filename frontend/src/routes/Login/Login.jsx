@@ -5,7 +5,6 @@ import {
     Typography,
     Card,
     CardHeader,
-    CardActionArea,
     CardContent,
     CardActions,
     InputAdornment,
