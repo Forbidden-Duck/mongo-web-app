@@ -74,7 +74,10 @@ function DesktopNavbar() {
     const handleLogoClick = () => history.replace("/");
 
     return (
-        <AppBar position="static">
+        <AppBar
+            position="static"
+            style={{ position: "relative", zIndex: 1400 }}
+        >
             <Toolbar className={classes.toolbar}>
                 <div className={classes.navLogo} onClick={handleLogoClick} />
                 <div className={classes.menuButton}>
@@ -119,6 +122,7 @@ function DesktopNavbar() {
                                 open={!!menu}
                                 onClose={handleMenuClose}
                                 keepMounted
+                                style={{ zIndex: 1401 }}
                             >
                                 <MenuItem
                                     onClick={handleMenuClose}
