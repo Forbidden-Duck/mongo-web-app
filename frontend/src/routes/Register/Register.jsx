@@ -64,7 +64,7 @@ function Register() {
         if (loggedin && !error && !isPending) {
             history.push("/");
         }
-    }, [loggedin, error, isPending]);
+    }, [loggedin, error, isPending, history]);
 
     const handleRegister = async (creds, { setFieldValue }) => {
         delete creds.confirmPassword;

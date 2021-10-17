@@ -30,7 +30,7 @@ function VerifyEmail() {
     useEffect(() => {
         dispatch(clearError());
         dispatch(verifyToken(token));
-    }, [dispatch]);
+    }, [dispatch, token]);
 
     useEffect(() => {
         if (!pended && !isPending) {
