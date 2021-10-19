@@ -9,12 +9,14 @@ import {
 // Components
 import DesktopNavbar from "./components/Navbar/DesktopNavbar";
 import MobileNavbar from "./components/Navbar/MobileNavbar";
+import LoggedInRoute from "./components/LoggedInRoute/LoggedInRoute";
 
 // Routes
 import Home from "./routes/Home/Home";
 import Login from "./routes/Login/Login";
 import Register from "./routes/Register/Register";
 import VerifyEmail from "./routes/VerifyEmail/VerifyEmail";
+import Settings from "./routes/Settings/Settings";
 
 import { useMediaQuery } from "@mui/material";
 
@@ -29,6 +31,8 @@ function App() {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/verify/:token" component={VerifyEmail} />
+
+                <LoggedInRoute exact path="/settings" Component={Settings} />
 
                 <Redirect from="*" to="/" />
             </Switch>
