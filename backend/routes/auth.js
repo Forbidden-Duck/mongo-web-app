@@ -159,7 +159,7 @@ module.exports = (app, Mongo) => {
             await Mongo.services.EmailService.create(
                 req.authorized.data.userid
             );
-            req.sendStatus(200);
+            res.sendStatus(200);
         } catch (err) {
             res.status(err.status || 500).send(err.message);
         }
