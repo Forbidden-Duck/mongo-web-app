@@ -38,3 +38,11 @@ export const verify = async (token) => {
         throw err.response.data;
     }
 };
+
+export const resend = async () => {
+    try {
+        return (await API.post("auth/verify/resend")).data;
+    } catch (err) {
+        throw err.response.data;
+    }
+};
