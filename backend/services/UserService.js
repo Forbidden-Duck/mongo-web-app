@@ -91,10 +91,6 @@ module.exports = class UserService {
         if (!findDoc || findDoc._id === undefined) {
             throw createError(404, "User not found");
         }
-        // Ensure the account is verified
-        if (!findDoc.verified && data.$set.verified !== true) {
-            throw createError(403, "Email not verified");
-        }
         // Check to make sure the email and username don't already exist
         if (data.$set.username) {
             const findByUsername = await this.find({
@@ -112,6 +108,13 @@ module.exports = class UserService {
         }
 
         if (data.$set.password) {
+            // Ensure the account is verified
+            if (!findDoc.verified && data.$set.verified !== true) {
+                throw createError(
+                    403,
+                    "You must have a verified email before changing your password"
+                );
+            }
             // Encrypt password
             try {
                 data.$set.password = crypto.hash.create(
