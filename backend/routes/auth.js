@@ -153,4 +153,15 @@ module.exports = (app, Mongo) => {
             res.status(err.status || 500).send(err.message);
         }
     });
+
+    router.post("/verify/resend", authorize(true, Mongo), async (req, res) => {
+        try {
+            await Mongo.services.EmailService.create(
+                req.authorized.data.userid
+            );
+            req.sendStatus(200);
+        } catch (err) {
+            res.status(err.status || 500).send(err.message);
+        }
+    });
 };
