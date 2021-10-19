@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import * as authActions from "./Auth.actions";
+import { deleteUser } from "../user/User.actions";
 
 const authSlice = createSlice({
     name: "auth",
@@ -12,7 +13,11 @@ const authSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            // TODO Delete user
+            // Delete user fulfilled
+            .addCase(deleteUser.fulfilled, (state) => {
+                state.isAuthenticated = false;
+                state.userid = null;
+            })
 
             // Clear error state
             .addCase(authActions.clearError, (state) => {
