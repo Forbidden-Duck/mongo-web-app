@@ -73,10 +73,7 @@ function MobileNavbar() {
     const handleLogoClick = () => history.replace("/");
 
     return (
-        <AppBar
-            position="static"
-            style={{ position: "relative", zIndex: 1400 }}
-        >
+        <AppBar position="static">
             <Toolbar className={classes.toolbar}>
                 <div className={classes.navLogo} onClick={handleLogoClick} />
                 <div className={classes.menuButton}>
