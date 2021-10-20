@@ -90,9 +90,6 @@ function Settings() {
                                         path="/settings/profile"
                                         render={() => (
                                             <ProfileComponent
-                                                isAuthenticated={
-                                                    isAuthenticated
-                                                }
                                                 user={user}
                                                 userPending={userPending}
                                                 userError={userError}
@@ -103,9 +100,6 @@ function Settings() {
                                         path="/settings/account"
                                         render={() => (
                                             <AccountComponent
-                                                isAuthenticated={
-                                                    isAuthenticated
-                                                }
                                                 user={user}
                                                 userPending={userPending}
                                                 userError={userError}

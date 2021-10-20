@@ -6,8 +6,6 @@ import {
     CardHeader,
     CardContent,
     CardActions,
-    InputAdornment,
-    IconButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Form, Formik } from "formik";
@@ -55,7 +53,7 @@ function ProfileComponent(props) {
 
     const dispatch = useDispatch();
 
-    const { isAuthenticated, userPending, userError, user } = props;
+    const { userPending, userError, user } = props;
 
     const handleUpdateUser = async (data, { setFieldValue }) => {
         // Force data to only allow username and email and delete undefined values
