@@ -124,7 +124,7 @@ function DesktopNavbar() {
                                 <MenuItem
                                     onClick={handleMenuClose}
                                     component={Link}
-                                    to="/settings"
+                                    to="/settings/profile"
                                 >
                                     <Typography>
                                         <FontAwesomeIcon icon={faCog} />

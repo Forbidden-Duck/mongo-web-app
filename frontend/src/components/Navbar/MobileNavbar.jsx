@@ -124,7 +124,7 @@ function MobileNavbar() {
                                     <MenuItem
                                         onClick={() => handleDrawer(false)}
                                         component={Link}
-                                        to="/settings"
+                                        to="/settings/profile"
                                     >
                                         <Typography>
                                             <FontAwesomeIcon icon={faCog} />
