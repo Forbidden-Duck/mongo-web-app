@@ -1,4 +1,5 @@
 import API from "./";
+import { Utils } from "@forbidden_duck/super-mongo";
 
 export const get = async () => {
     try {
@@ -18,6 +19,9 @@ export const update = async (data) => {
 
 export const delete1 = async (data) => {
     try {
+        data.password = !!data.password
+            ? Utils.Base64.encode(data.password)
+            : data.password;
         return (await API.delete("user", { data })).data;
     } catch (err) {
         throw err.response.data;
