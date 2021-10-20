@@ -18,7 +18,7 @@ export const update = async (data) => {
 
 export const delete1 = async (data) => {
     try {
-        return (await API.delete("user", data)).data;
+        return (await API.delete("user", { data })).data;
     } catch (err) {
         throw err.response.data;
     }

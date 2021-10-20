@@ -66,7 +66,7 @@ const userSlice = createSlice({
             })
             // Delete user rejected
             .addCase(userActions.deleteUser.rejected, (state, action) => {
-                const { message } = action.payload;
+                const { message } = action.error;
                 state.isPending = false;
                 state.error = message;
             });
