@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     BrowserRouter as Router,
     Redirect,
     Route,
     Switch,
 } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 // Components
 import DesktopNavbar from "./components/Navbar/DesktopNavbar";
@@ -20,8 +21,15 @@ import Settings from "./routes/Settings/Settings";
 
 import { useMediaQuery } from "@mui/material";
 
+import { loginUser } from "./store/auth/Auth.actions";
+
 function App() {
     const isMobile640 = useMediaQuery("(max-width:640px)");
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(loginUser());
+    }, [dispatch]);
 
     return (
         <Router>
