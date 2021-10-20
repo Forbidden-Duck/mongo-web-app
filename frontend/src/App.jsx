@@ -40,7 +40,7 @@ function App() {
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/verify/:token" component={VerifyEmail} />
 
-                <LoggedInRoute exact path="/settings" Component={Settings} />
+                <LoggedInRoute path="/settings" Component={Settings} />
 
                 <Redirect from="*" to="/" />
             </Switch>
