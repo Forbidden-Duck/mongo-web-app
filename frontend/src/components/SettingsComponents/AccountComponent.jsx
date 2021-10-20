@@ -41,9 +41,8 @@ function AccountComponent(props) {
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPassword = () => setShowPassword(!showPassword);
 
-    const handleDeleteUser = async (data, { setFieldValue }) => {
+    const handleDeleteUser = async (data) => {
         await dispatch(deleteUser(data.password));
-        setFieldValue("password", "");
     };
     const formatError = (msg) => {
         switch (msg) {
