@@ -39,12 +39,8 @@ function ProfileComponent(props) {
             padding: "15px",
         },
         error: {
+            textAlign: "center",
             background: "rgba(255,0,0,.5)",
-            width: "100%",
-            fontWeight: 500,
-        },
-        warning: {
-            background: "rgba(252,186,3,.5)",
             width: "100%",
             fontWeight: 500,
         },
@@ -88,6 +84,11 @@ function ProfileComponent(props) {
         >
             <Form>
                 <Card className={classes.card} elevation={10}>
+                    {!!userError && (
+                        <Typography className={classes.error} variant="body2">
+                            {userError}
+                        </Typography>
+                    )}
                     <CardHeader
                         title="Profile Settings"
                         titleTypographyProps={{
