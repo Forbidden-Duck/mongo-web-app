@@ -57,6 +57,7 @@ function ProfileComponent(props) {
     const { userPending, userError, user } = props;
 
     const handleUpdateUser = async (data, { setFieldValue }) => {
+        if (!data.username || !data.email) return;
         // Force data to only allow username and email and delete undefined values
         data = Utils.Obj2Schema.compare(
             data,
