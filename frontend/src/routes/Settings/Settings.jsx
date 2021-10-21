@@ -7,7 +7,7 @@ import {
     Link,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Tabs, Tab, Box, useMediaQuery } from "@mui/material";
+import { Tabs, Tab, Box, useMediaQuery, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import ProfileComponent from "../../components/SettingsComponents/ProfileComponent";
@@ -125,6 +125,17 @@ function Settings() {
                                     <Route
                                         path="/settings/security"
                                         render={() => <p>Tab 2</p>}
+                                    />
+                                    <Route
+                                        path="/settings/amongus"
+                                        render={() => (
+                                            <Typography
+                                                color="red"
+                                                variant="body1"
+                                            >
+                                                Red lookin pretty sus
+                                            </Typography>
+                                        )}
                                     />
                                     <Redirect from="*" to="/settings/profile" />
                                 </Switch>
