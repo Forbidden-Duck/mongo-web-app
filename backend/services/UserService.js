@@ -1,7 +1,10 @@
 const { Utils: SuperUtils } = require("@forbidden_duck/super-mongo");
 const createError = require("http-errors");
 const {
-    __collections: { users: UserCollection },
+    __collections: {
+        users: UserCollection,
+        refresh_tokens: RefreshTokenCollection,
+    },
 } = require("../db");
 const crypto = require("../crypto");
 
@@ -225,6 +228,8 @@ module.exports = class UserService {
         for (const db of findDBs) {
             await this.DBService.delete({ _id: db._id });
         }
+        // Delete all refresh tokens for that user
+        await RefreshTokenCollection.deleteMany({ userid: findDoc._id });
 
         // Check the document was deleted
         const deletedDoc = await this.find(filter);
