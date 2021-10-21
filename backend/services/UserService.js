@@ -117,6 +117,8 @@ module.exports = class UserService {
             if (findByEmail && findByEmail._id) {
                 throw createError(409, "Email already exists");
             }
+            // Ensure verify is set to false
+            data.$set.verified = false;
         }
 
         if (data.$set.password) {
@@ -147,7 +149,7 @@ module.exports = class UserService {
             throw createError(500, err.message);
         }
 
-        if (data.$set.email && !findDoc.verified) {
+        if (data.$set.email) {
             // Send a new verification email
             await this.EmailService.create(findDoc._id);
         }
