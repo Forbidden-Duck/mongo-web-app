@@ -30,7 +30,7 @@ function Login() {
             height: "calc(100% - 66px)",
         },
         card: {
-            width: "400px",
+            maxWidth: "400px",
             padding: "15px",
         },
         clearLink: {
