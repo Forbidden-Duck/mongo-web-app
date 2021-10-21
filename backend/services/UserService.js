@@ -93,6 +93,12 @@ module.exports = class UserService {
         }
         // Check to make sure the email and username don't already exist
         if (data.$set.username) {
+            if (data.$set.username === findDoc.username) {
+                throw createError(
+                    409,
+                    `Your username is already "${data.$set.username}"`
+                );
+            }
             const findByUsername = await this.find({
                 username: data.$set.username,
             });
@@ -101,6 +107,12 @@ module.exports = class UserService {
             }
         }
         if (data.$set.email) {
+            if (data.$set.email === findDoc.email) {
+                throw createError(
+                    409,
+                    `Your email is already "${data.$set.username}"`
+                );
+            }
             const findByEmail = await this.find({ email: data.$set.email });
             if (findByEmail && findByEmail._id) {
                 throw createError(409, "Email already exists");
