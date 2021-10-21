@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Typography, CircularProgress } from "@mui/material";
+import { Typography, CircularProgress, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import { clearError, verifyToken } from "../../store/auth/Auth.actions";
@@ -24,44 +24,51 @@ function VerifyEmail() {
     const { token } = useParams();
 
     const { isPending, error } = useSelector((state) => state.auth);
-    const [pended, setPended] = useState(false);
     const [verify, setVerify] = useState(false);
+    const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         dispatch(clearError());
-        dispatch(verifyToken(token));
-    }, [dispatch, token]);
+    }, [dispatch]);
 
-    useEffect(() => {
-        if (!pended && !isPending) {
-            setPended(true);
-        } else if (pended && !isPending) {
-            setVerify(true);
-        }
-    }, [isPending, setVerify, setPended, pended]);
+    const handleVerify = () => {
+        dispatch(verifyToken(token));
+        setVerify(true);
+    };
 
     return (
         <div className={classes.app}>
             <div style={{ textAlign: "center" }}>
                 {verify ? (
-                    <>
-                        {error ? (
-                            <>
-                                <Typography style={{ color: "red" }}>
-                                    Failed to verify email
-                                </Typography>
-                            </>
-                        ) : (
-                            <>
-                                <Typography>Email has been verified</Typography>
-                            </>
-                        )}
-                    </>
+                    isPending ? (
+                        <>
+                            <Typography>Verifying...</Typography>
+                            <CircularProgress color="primary" />
+                        </>
+                    ) : error || hasError ? (
+                        <>
+                            {/* Logging out would remove the error */}
+                            {!hasError && setHasError(true)}{" "}
+                            <Typography style={{ color: "red" }}>
+                                Failed to verify email
+                            </Typography>
+                        </>
+                    ) : (
+                        <>
+                            <Typography>Email has been verified</Typography>
+                        </>
+                    )
                 ) : (
-                    <>
-                        <Typography>Verifying...</Typography>
-                        <CircularProgress color="primary" />
-                    </>
+                    <Button
+                        style={{ marginBottom: "10px" }}
+                        variant="contained"
+                        color="primary"
+                        fullWidth={true}
+                        size="large"
+                        onClick={handleVerify}
+                    >
+                        Verify Email
+                    </Button>
                 )}
                 <Typography
                     className={classes.clearLink}
