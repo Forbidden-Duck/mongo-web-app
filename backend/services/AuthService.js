@@ -202,6 +202,13 @@ module.exports = class AuthService {
             throw createError(500, "Internal Server Error");
         }
 
+        // Delete the original token
+        try {
+            await RefreshTokensCollection.deleteOne({
+                _id: token,
+            });
+        } catch (err) {}
+
         return {
             user: findUser,
             token: jwtToken,
