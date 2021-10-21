@@ -21,6 +21,18 @@ import TextField from "../FormikTextField/FormikTextField";
 
 import { deleteUser } from "../../store/user/User.actions";
 
+/**
+ * @typedef {object} AccountComponentProps
+ * @property {boolean} userPending
+ * @property {object} user
+ * @property {string} [userError]
+ */
+
+/**
+ *
+ * @param {AccountComponentProps} props
+ * @returns
+ */
 function AccountComponent(props) {
     const classes = makeStyles((theme) => ({
         card: {
