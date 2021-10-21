@@ -20,7 +20,6 @@ import { updateUser } from "../../store/user/User.actions";
 
 /**
  * @typedef {object} ProfileComponentProps
- * @property {boolean} isAuthenticated
  * @property {boolean} userPending
  * @property {object} user
  * @property {string} [userError]
