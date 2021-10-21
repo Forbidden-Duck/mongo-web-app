@@ -132,7 +132,6 @@ module.exports = class UserService {
                 );
             } else {
                 try {
-                    console.log(data.$set);
                     if (
                         !crypto.hash.compare(
                             crypto.base64.decode(data.$set.currentPassword),
