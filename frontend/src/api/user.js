@@ -11,6 +11,7 @@ export const get = async () => {
 
 export const update = async (data) => {
     try {
+        if (data.password) data.password = Utils.Base64.encode(data.password);
         return (await API.put("user", data)).data;
     } catch (err) {
         throw err.response.data;
