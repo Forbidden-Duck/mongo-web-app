@@ -88,9 +88,12 @@ function Register() {
             .email("Invalid email address")
             .required("Email is required"),
         password: Yup.string().required("Password is required"),
-        confirmPassword: Yup.string().oneOf(
-            [Yup.ref("password"), null],
-            "Password does not match"
+        confirmPassword: Yup.string().test(
+            "match-password",
+            "Does not match password",
+            function (value) {
+                return this.parent.password === value;
+            }
         ),
     });
     const formatError = (msg) => {
