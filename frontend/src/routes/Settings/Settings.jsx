@@ -12,6 +12,7 @@ import { makeStyles } from "@mui/styles";
 
 import ProfileComponent from "../../components/SettingsComponents/ProfileComponent";
 import AccountComponent from "../../components/SettingsComponents/AccountComponent";
+import SecurityComponent from "../../components/SettingsComponents/SecurityComponent";
 
 import { clearError } from "../../store/auth/Auth.actions";
 import { getUser } from "../../store/user/User.actions";
@@ -54,7 +55,6 @@ function Settings() {
 
     const dispatch = useDispatch();
 
-    const { isAuthenticated } = useSelector((state) => state.auth);
     const {
         user,
         error: userError,
@@ -124,7 +124,13 @@ function Settings() {
                                     />
                                     <Route
                                         path="/settings/security"
-                                        render={() => <p>Tab 2</p>}
+                                        render={() => (
+                                            <SecurityComponent
+                                                user={user}
+                                                userPending={userPending}
+                                                userError={userError}
+                                            />
+                                        )}
                                     />
                                     <Route
                                         path="/settings/amongus"
