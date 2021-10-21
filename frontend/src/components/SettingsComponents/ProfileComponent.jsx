@@ -119,7 +119,7 @@ function ProfileComponent(props) {
                                 className={classes.resend}
                                 onClick={handleResend}
                             >
-                                Resend
+                                Resend Email
                             </Typography>
                         )}
                     </CardContent>
