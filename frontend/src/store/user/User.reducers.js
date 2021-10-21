@@ -51,7 +51,6 @@ const userSlice = createSlice({
                 const { message } = action.error;
                 state.isPending = false;
                 state.error = message;
-                state.user = null;
             })
 
             // Delete user pending
