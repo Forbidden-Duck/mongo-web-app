@@ -135,7 +135,7 @@ function AccountComponent(props) {
                             fullWidth={true}
                             size="large"
                             progressVariant="error"
-                            disabled={!!user}
+                            disabled={!user}
                         >
                             <Typography variant="body2">
                                 Delete Account

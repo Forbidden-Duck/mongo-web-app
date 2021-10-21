@@ -132,7 +132,7 @@ function ProfileComponent(props) {
                             fullWidth={true}
                             size="large"
                             progressVariant="error"
-                            disabled={!!user}
+                            disabled={!user}
                         >
                             <Typography variant="body2">Save</Typography>
                         </Button>
