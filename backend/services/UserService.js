@@ -69,8 +69,8 @@ module.exports = class UserService {
 
     /**
      * Update user data
-     * @param {import("mongodb").UpdateFilter<UserCollection["schema"]>} data
-     * @param {import("mongodb").Filter<UserCollection["schema"]>} filter
+     * @param {import("mongodb").UpdateFilter<UserCollection["schema"] & { currentPassword: string }>} data
+     * @param {import("mongodb").Filter<UserCollection["schema"] & { currentPassword: string }>} filter
      * @returns {Promise<UserCollection["schema"]>}
      */
     async update(data, filter) {
@@ -78,7 +78,10 @@ module.exports = class UserService {
         try {
             data = SuperUtils.Operations.UpdateFilter(
                 data,
-                UserCollection.schema,
+                {
+                    ...UserCollection.schema,
+                    currentPassword: UserCollection.schema.password,
+                },
                 {
                     strictMode: { strictType: true },
                 }
@@ -122,6 +125,30 @@ module.exports = class UserService {
         }
 
         if (data.$set.password) {
+            if (!data.$set.currentPassword) {
+                throw createError(
+                    400,
+                    "Changing password requires the current password"
+                );
+            } else {
+                try {
+                    console.log(data.$set);
+                    if (
+                        !crypto.hash.compare(
+                            crypto.base64.decode(data.$set.currentPassword),
+                            findDoc.password
+                        )
+                    ) {
+                        throw createError(401, "Unauthorized");
+                    }
+                } catch (err) {
+                    if (err.status === 401) throw err;
+                    throw createError(
+                        400,
+                        "Current password is not encoded with Base64"
+                    );
+                }
+            }
             // Ensure the account is verified
             if (!findDoc.verified && data.$set.verified !== true) {
                 throw createError(

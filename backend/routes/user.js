@@ -46,6 +46,7 @@ module.exports = (app, Mongo) => {
                     username: UserSchema.username,
                     email: UserSchema.email,
                     password: UserSchema.password,
+                    currentPassword: UserSchema.password,
                 },
                 { noUndefined: true, strictMode: { strictType: true } }
             );
