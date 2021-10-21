@@ -6,6 +6,7 @@ import {
     CardHeader,
     CardContent,
     CardActions,
+    useMediaQuery,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Form, Formik } from "formik";
@@ -33,7 +34,7 @@ import { updateUser } from "../../store/user/User.actions";
 function ProfileComponent(props) {
     const classes = makeStyles((theme) => ({
         card: {
-            width: "400px",
+            maxWidth: "400px",
             padding: "15px",
         },
         error: {
@@ -50,6 +51,7 @@ function ProfileComponent(props) {
             },
         },
     }))();
+    const isTinyMobile = useMediaQuery("(max-width:300px)");
 
     const dispatch = useDispatch();
 
@@ -88,7 +90,7 @@ function ProfileComponent(props) {
                         </Typography>
                     )}
                     <CardHeader
-                        title="Profile Settings"
+                        title={isTinyMobile ? "Profile" : "Profile Settings"}
                         titleTypographyProps={{
                             align: "center",
                             variant: "h4",

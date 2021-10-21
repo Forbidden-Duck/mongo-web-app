@@ -7,7 +7,7 @@ import {
     Link,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Tabs, Tab, Box } from "@mui/material";
+import { Tabs, Tab, Box, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import ProfileComponent from "../../components/SettingsComponents/ProfileComponent";
@@ -30,7 +30,27 @@ function Settings() {
             alignItems: "center",
             width: "100%",
         },
+        "@media (max-width:530px)": {
+            app: {
+                flexDirection: "column",
+            },
+            content: {
+                height: "100%",
+            },
+        },
     }))();
+    const isMobile = useMediaQuery("(max-width:530px)");
+    const boxSX = isMobile
+        ? {
+              width: "100%",
+              height: "48px",
+              borderBottom: "solid 1px gray",
+          }
+        : {
+              height: "100%",
+              width: "100px",
+              borderRight: "solid 1px gray",
+          };
 
     const dispatch = useDispatch();
 
@@ -53,15 +73,11 @@ function Settings() {
                     path="/"
                     render={({ location }) => (
                         <>
-                            <Box
-                                sx={{
-                                    height: "100%",
-                                    width: "100px",
-                                    borderRight: "solid 1px gray",
-                                }}
-                            >
+                            <Box sx={boxSX}>
                                 <Tabs
-                                    orientation="vertical"
+                                    orientation={
+                                        isMobile ? "horizontal" : "vertical"
+                                    }
                                     value={location.pathname}
                                 >
                                     <Tab

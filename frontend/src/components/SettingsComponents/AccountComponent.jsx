@@ -8,6 +8,7 @@ import {
     CardActions,
     InputAdornment,
     IconButton,
+    useMediaQuery,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Form, Formik } from "formik";
@@ -23,7 +24,7 @@ import { deleteUser } from "../../store/user/User.actions";
 function AccountComponent(props) {
     const classes = makeStyles((theme) => ({
         card: {
-            width: "400px",
+            maxWidth: "400px",
             padding: "15px",
         },
         error: {
@@ -33,6 +34,7 @@ function AccountComponent(props) {
             fontWeight: 500,
         },
     }))();
+    const isTinyMobile = useMediaQuery("(max-width:330px)");
 
     const dispatch = useDispatch();
 
@@ -71,7 +73,7 @@ function AccountComponent(props) {
                         </Typography>
                     )}
                     <CardHeader
-                        title="Account Settings"
+                        title={isTinyMobile ? "Account" : "Account Settings"}
                         titleTypographyProps={{
                             align: "center",
                             variant: "h4",
