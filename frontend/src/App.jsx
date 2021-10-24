@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-import {
-    BrowserRouter as Router,
-    Redirect,
-    Route,
-    Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 // Components
@@ -35,14 +30,14 @@ function App() {
         <Router>
             {isMobile640 ? <MobileNavbar /> : <DesktopNavbar />}
             <Switch>
-                <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/verify/:token" component={VerifyEmail} />
 
                 <LoggedInRoute path="/settings" Component={Settings} />
 
-                <Redirect from="*" to="/" />
+                {/* If nothing else loads, load home page */}
+                <Route path="/" component={Home} />
             </Switch>
         </Router>
     );
