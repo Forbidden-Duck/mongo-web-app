@@ -4,7 +4,8 @@ import {
     Route,
     Redirect,
     Switch,
-    Link,
+    useHistory,
+    useLocation,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,8 +17,11 @@ import {
     Menu,
     MenuItem,
     Divider,
+    IconButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 // TODO Component for viewing databases
 // TODO Component for adding new databases
@@ -61,15 +65,52 @@ function Home() {
           };
 
     const dispatch = useDispatch();
+    const history = useHistory();
+    const location = useLocation();
 
     const { isAuthenticated } = useSelector((state) => state.auth);
 
     useEffect(() => {
         dispatch(clearError());
-        dispatch(getAll());
     }, [dispatch]);
 
-    const [tabValue, setTabValue] = useState(false);
+    useEffect(() => {
+        if (isAuthenticated) dispatch(getAll());
+    }, [dispatch, isAuthenticated]);
+
+    const [tabValue, _setTabValue] = useState(false);
+    const setTabValue = (value) => {
+        if (tabValue === value) {
+            _setTabValue(false);
+            history.push("/");
+        } else {
+            _setTabValue(value);
+            history.push(`/${value}`);
+        }
+    };
+
+    // TODO Limit tab label to 15 characters
+
+    const [databases, setDatabases] = useState([
+        {
+            _id: "theid",
+            address: "howardfamily.ddns.net",
+            host: "888888888888888888",
+        },
+    ]);
+    useEffect(() => {
+        const identifier = location.pathname.split("/")[1];
+        switch (identifier) {
+            case "new":
+                _setTabValue("new");
+                break;
+            default:
+                if (databases.find((db) => db._id === identifier))
+                    _setTabValue(identifier);
+                else history.push("/");
+                break;
+        }
+    }, []);
 
     return (
         <Router>
@@ -82,11 +123,56 @@ function Home() {
                         <Tab
                             label="New"
                             value="new"
-                            component={Link}
-                            to="/new"
                             onClick={() => setTabValue("new")}
                         />
                         <Divider />
+                        {databases.map((db) => [
+                            <Tab
+                                label={
+                                    <div
+                                        style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            width: "100%",
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "flex-start",
+                                                width: "100%",
+                                            }}
+                                        >
+                                            <Typography variant="body2">
+                                                {db.host || db.address}
+                                            </Typography>
+                                        </div>
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "flex-end",
+                                                width: "100%",
+                                            }}
+                                        >
+                                            <IconButton size="small">
+                                                <FontAwesomeIcon
+                                                    icon={faChevronDown}
+                                                    size="sm"
+                                                />
+                                            </IconButton>
+                                        </div>
+                                    </div>
+                                }
+                                value={db._id}
+                                onClick={() => setTabValue(db._id)}
+                                sx={{
+                                    textTransform: "unset",
+                                    fontSize: ".7em",
+                                    fontWeight: "500",
+                                }}
+                            />,
+                            <Divider />,
+                        ])}
                     </Tabs>
                 </Box>
                 <div className={classes.content}>
@@ -99,7 +185,6 @@ function Home() {
                                 </Typography>
                             )}
                         />
-                        <Redirect from="*" to="/" />
                     </Switch>
                 </div>
             </div>
