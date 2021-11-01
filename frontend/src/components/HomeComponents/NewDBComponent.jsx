@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import {
+    Button,
     Typography,
     Card,
     CardHeader,
@@ -10,8 +11,8 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Form, Formik } from "formik";
+import * as Yup from "yup";
 
-import Button from "../ActionButton/ActionButton";
 import TextField from "../FormikTextField/FormikTextField";
 
 /**
@@ -37,7 +38,7 @@ function NewDBComponent(props) {
             fontWeight: 500,
         },
     }))();
-    const isTinyMobile = useMediaQuery("(max-width:300px)");
+    //const isTinyMobile = useMediaQuery("(max-width:300px)");
 
     const dispatch = useDispatch();
 
@@ -46,8 +47,82 @@ function NewDBComponent(props) {
     const handleSubmit = (data) => {
         onSubmit(data);
     };
+    const newDBSchema = Yup.object().shape({
+        address: Yup.string().required("Address is required"),
+        host: Yup.string().required("Host is required"),
+        username: Yup.string(),
+        password: Yup.string(),
+    });
 
-    return <p>test</p>;
+    return (
+        <Formik
+            initialValues={{
+                address: "",
+                host: "",
+                username: "",
+                password: "",
+            }}
+            validationSchema={newDBSchema}
+            onSubmit={handleSubmit}
+            validateOnBlur
+        >
+            <Form>
+                <Card className={classes.card} elevation={10}>
+                    <CardHeader
+                        title="New Database"
+                        titleTypographyProps={{
+                            align: "center",
+                            variant: "h4",
+                            sx: { fontWeight: "400" },
+                        }}
+                    />
+                    <CardContent>
+                        <TextField
+                            style={{ width: "100%", marginBottom: "30px" }}
+                            name="address"
+                            label="Address"
+                            id="address-input"
+                            autoComplete="off"
+                        />
+                        <TextField
+                            style={{ width: "100%", marginBottom: "30px" }}
+                            name="host"
+                            label="Host"
+                            id="host-input"
+                            autoComplete="off"
+                        />
+                        <TextField
+                            style={{ width: "100%", marginBottom: "30px" }}
+                            name="username"
+                            label="Username"
+                            id="username-input"
+                            autoComplete="off"
+                        />
+                        <TextField
+                            style={{ width: "100%", marginBottom: "10px" }}
+                            name="password"
+                            label="Password"
+                            id="password-input"
+                            autoComplete="off"
+                            type="password"
+                        />
+                    </CardContent>
+                    <CardActions>
+                        <Button
+                            style={{ marginTop: "30px" }}
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            fullWidth={true}
+                            size="large"
+                        >
+                            <Typography variant="body2">Add</Typography>
+                        </Button>
+                    </CardActions>
+                </Card>
+            </Form>
+        </Formik>
+    );
 }
 
 export default NewDBComponent;

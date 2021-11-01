@@ -22,6 +22,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { Utils } from "@forbidden_duck/super-mongo";
 
 // TODO Component for viewing databases
 import NewDBComponent from "../../components/HomeComponents/NewDBComponent";
@@ -112,6 +113,12 @@ function Home() {
         }
     }, []);
 
+    const handleNewDatabase = (data) => {
+        data._id = Utils.ID.create("SHA256");
+        setDatabases([...databases, data]);
+        setTabValue("");
+    };
+
     return (
         <Router>
             <div className={classes.app}>
@@ -184,7 +191,7 @@ function Home() {
                         <Route
                             path="/new"
                             render={() => (
-                                <NewDBComponent onSubmit={console.log} />
+                                <NewDBComponent onSubmit={handleNewDatabase} />
                             )}
                         />
                         <Route
