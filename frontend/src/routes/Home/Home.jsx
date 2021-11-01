@@ -143,7 +143,12 @@ function Home() {
                                                 width: "100%",
                                             }}
                                         >
-                                            <Typography variant="body2">
+                                            <Typography
+                                                variant="body2"
+                                                onClick={() =>
+                                                    setTabValue(db._id)
+                                                }
+                                            >
                                                 {db.host || db.address}
                                             </Typography>
                                         </div>
@@ -164,7 +169,6 @@ function Home() {
                                     </div>
                                 }
                                 value={db._id}
-                                onClick={() => setTabValue(db._id)}
                                 sx={{
                                     textTransform: "unset",
                                     fontSize: ".7em",
