@@ -38,7 +38,7 @@ function NewDBComponent(props) {
             fontWeight: 500,
         },
     }))();
-    //const isTinyMobile = useMediaQuery("(max-width:300px)");
+    const isTinyMobile = useMediaQuery("(max-width:290px)");
 
     const dispatch = useDispatch();
 
@@ -69,7 +69,7 @@ function NewDBComponent(props) {
             <Form>
                 <Card className={classes.card} elevation={10}>
                     <CardHeader
-                        title="New Database"
+                        title={isTinyMobile ? "New DB" : "New Database"}
                         titleTypographyProps={{
                             align: "center",
                             variant: "h4",
