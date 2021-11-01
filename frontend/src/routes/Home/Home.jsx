@@ -24,7 +24,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 // TODO Component for viewing databases
-// TODO Component for adding new databases
+import NewDBComponent from "../../components/HomeComponents/NewDBComponent";
 
 import { clearError, getAll } from "../../store/db/Db.actions";
 
@@ -176,7 +176,13 @@ function Home() {
                     </Tabs>
                 </Box>
                 <div className={classes.content}>
-                    <Switch>
+                    <Switch location={location}>
+                        <Route
+                            path="/new"
+                            render={() => (
+                                <NewDBComponent onSubmit={console.log} />
+                            )}
+                        />
                         <Route
                             path="/"
                             render={() => (
