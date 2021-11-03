@@ -34,7 +34,7 @@ function Home() {
         app: {
             display: "flex",
             justifyContent: "flex-start",
-            alignItems: "center",
+            alignItems: "flex-start",
             height: "calc(100% - 66px)",
         },
         content: {
@@ -42,13 +42,11 @@ function Home() {
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
+            height: "100%",
         },
         "@media (max-width:530px)": {
             app: {
                 flexDirection: "column",
-            },
-            content: {
-                height: "100%",
             },
         },
     }))();
@@ -60,6 +58,8 @@ function Home() {
               borderBottom: "solid 1px gray",
           }
         : {
+              display: "flex",
+              flexGrow: 1,
               height: "100%",
               width: "250px",
               borderRight: "solid 1px gray",
@@ -126,6 +126,9 @@ function Home() {
                     <Tabs
                         orientation={isMobile ? "horizontal" : "vertical"}
                         value={tabValue}
+                        variant="scrollable"
+                        scrollButtons="auto"
+                        allowScrollButtonsMobile
                     >
                         <Tab
                             label="New"
