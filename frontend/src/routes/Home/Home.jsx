@@ -189,6 +189,7 @@ function Home() {
                 <div className={classes.content}>
                     <Switch location={location}>
                         <Route
+                            exact
                             path="/new"
                             render={() => (
                                 <NewDBComponent onSubmit={handleNewDatabase} />
