@@ -90,7 +90,10 @@ function Home() {
         }
     };
 
-    // TODO Limit tab label to 15 characters
+    const limitLabelLength = (label) => {
+        if (label.length > 17) return `${label.substring(0, 17)}...`;
+        return label;
+    };
 
     const [databases, setDatabases] = useState([
         {
@@ -159,7 +162,9 @@ function Home() {
                                                     setTabValue(db._id)
                                                 }
                                             >
-                                                {db.host || db.address}
+                                                {limitLabelLength(
+                                                    db.host || db.address
+                                                )}
                                             </Typography>
                                         </div>
                                         <div
