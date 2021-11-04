@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Menu } from "@mui/material";
+import { Menu } from "@mui/material";
 
 /**
  *

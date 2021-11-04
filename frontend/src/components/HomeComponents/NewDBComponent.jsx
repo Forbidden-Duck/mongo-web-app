@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import {
     Button,
     Typography,
@@ -39,8 +38,6 @@ function NewDBComponent(props) {
         },
     }))();
     const isTinyMobile = useMediaQuery("(max-width:290px)");
-
-    const dispatch = useDispatch();
 
     const { onSubmit } = props;
 
