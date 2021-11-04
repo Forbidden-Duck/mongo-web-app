@@ -14,18 +14,16 @@ import {
     Box,
     useMediaQuery,
     Typography,
-    Menu,
     MenuItem,
     Divider,
     IconButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Utils } from "@forbidden_duck/super-mongo";
 
 // TODO Component for viewing databases
 import NewDBComponent from "../../components/HomeComponents/NewDBComponent";
+import DatabaseMenu from "../../components/HomeComponents/DatabaseMenu";
 
 import { clearError, getAll } from "../../store/db/Db.actions";
 
@@ -121,6 +119,10 @@ function Home() {
         setDatabases([...databases, data]);
         setTabValue("");
     };
+    const handleDeleteDatabase = (id) => {
+        setTabValue("");
+        setDatabases(databases.filter((db) => db._id !== id));
+    };
 
     return (
         <Router>
@@ -132,6 +134,7 @@ function Home() {
                         variant="scrollable"
                         scrollButtons="auto"
                         allowScrollButtonsMobile
+                        style={{ width: "100%" }}
                     >
                         <Tab
                             label="New"
@@ -174,12 +177,24 @@ function Home() {
                                                 width: "100%",
                                             }}
                                         >
-                                            <IconButton size="small">
-                                                <FontAwesomeIcon
-                                                    icon={faChevronDown}
-                                                    size="sm"
-                                                />
-                                            </IconButton>
+                                            <DatabaseMenu
+                                                id={`${db._id}-select`}
+                                                anchorOrigin={{
+                                                    vertical: "bottom",
+                                                    horizontal: "center",
+                                                }}
+                                                transformOrigin={{
+                                                    vertical: "top",
+                                                    horizontal: "center",
+                                                }}
+                                                keepMounted
+                                                isAuthenticated={
+                                                    isAuthenticated
+                                                }
+                                                handleDelete={() =>
+                                                    handleDeleteDatabase(db._id)
+                                                }
+                                            />
                                         </div>
                                     </div>
                                 }
