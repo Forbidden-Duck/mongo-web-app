@@ -26,7 +26,7 @@ const dbSlice = createSlice({
                 state.isPending = false;
                 state.error = null;
                 for (const db of dbs) {
-                    state.dbCache[db._id] = db;
+                    state.dbCache[db._id] = { ...db, saved: true };
                 }
             })
             // Get all rejected
@@ -45,7 +45,7 @@ const dbSlice = createSlice({
                 const { db } = action.payload;
                 state.isPending = false;
                 state.error = null;
-                state.dbCache[db._id] = db;
+                state.dbCache[db._id] = { ...db, saved: true };
             })
             // Get db rejected
             .addCase(dbActions.getOne.rejected, (state, action) => {
@@ -63,7 +63,7 @@ const dbSlice = createSlice({
                 const { db } = action.payload;
                 state.isPending = false;
                 state.error = null;
-                state.dbCache[db._id] = db;
+                state.dbCache[db._id] = { ...db, saved: true };
             })
             // Create db rejected
             .addCase(dbActions.createOne.rejected, (state, action) => {
@@ -81,7 +81,7 @@ const dbSlice = createSlice({
                 const { db } = action.payload;
                 state.isPending = false;
                 state.error = null;
-                state.dbCache[db._id] = db;
+                state.dbCache[db._id] = { ...db, saved: true };
             })
             // Update db rejected
             .addCase(dbActions.updateOne.rejected, (state, action) => {
