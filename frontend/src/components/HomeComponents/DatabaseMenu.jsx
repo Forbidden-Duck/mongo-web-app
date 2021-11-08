@@ -21,9 +21,10 @@ import useActionMenu from "../../hooks/useActionMenu/useActionMenu";
  * @param {import("@mui/material").MenuProps & DatabaseMenuProps} props
  */
 function DatabaseMenu(props) {
-    const [, , , menuToggle, Menu] = useActionMenu();
+    const [, , closeMenu, menuToggle, Menu] = useActionMenu();
 
     const middlewareClick = (func) => {
+        closeMenu();
         if (props.isAuthenticated) {
             return func();
         } else {
