@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, IconButton, MenuItem } from "@mui/material";
+import { Typography, IconButton, MenuItem, Tooltip } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faChevronDown,
@@ -27,8 +27,6 @@ function DatabaseMenu(props) {
         closeMenu();
         if (props.isAuthenticated) {
             return func();
-        } else {
-            console.log("not logged in");
         }
     };
     const handleSave = () => {
@@ -49,24 +47,44 @@ function DatabaseMenu(props) {
                 <FontAwesomeIcon icon={faChevronDown} size="sm" />
             </IconButton>
             <Menu {...menuProps}>
-                <MenuItem
-                    onClick={handleSave}
-                    disabled={!props.isAuthenticated}
+                <Tooltip
+                    title={!props.isAuthenticated ? "Not logged in" : ""}
+                    placement="right"
                 >
-                    <Typography>
-                        <FontAwesomeIcon icon={faSave} />
-                        &nbsp;Save
-                    </Typography>
-                </MenuItem>
-                <MenuItem
-                    onClick={handleFavourite}
-                    disabled={!props.isAuthenticated}
+                    <MenuItem
+                        onClick={handleSave}
+                        disabled={!props.isAuthenticated}
+                        sx={{
+                            "&.Mui-disabled": {
+                                pointerEvents: "auto",
+                            },
+                        }}
+                    >
+                        <Typography>
+                            <FontAwesomeIcon icon={faSave} />
+                            &nbsp;Save
+                        </Typography>
+                    </MenuItem>
+                </Tooltip>
+                <Tooltip
+                    title={!props.isAuthenticated ? "Not logged in" : ""}
+                    placement="right"
                 >
-                    <Typography>
-                        <FontAwesomeIcon icon={faStar} />
-                        &nbsp;Favourite
-                    </Typography>
-                </MenuItem>
+                    <MenuItem
+                        onClick={handleFavourite}
+                        disabled={!props.isAuthenticated}
+                        sx={{
+                            "&.Mui-disabled": {
+                                pointerEvents: "auto",
+                            },
+                        }}
+                    >
+                        <Typography>
+                            <FontAwesomeIcon icon={faStar} />
+                            &nbsp;Favourite
+                        </Typography>
+                    </MenuItem>
+                </Tooltip>
                 <MenuItem onClick={props.handleDelete}>
                     <Typography style={{ color: "red" }}>
                         <FontAwesomeIcon icon={faTrash} />
