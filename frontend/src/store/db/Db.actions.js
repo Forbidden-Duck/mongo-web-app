@@ -33,3 +33,7 @@ export const deleteOne = createAsyncThunk("db/deleteOne", async (data) => {
 });
 
 export const clearError = createAction("db/clearError");
+
+export const addDBs = createAction("db/addDBs");
+
+export const removeDBs = createAction("db/removeDBs");
