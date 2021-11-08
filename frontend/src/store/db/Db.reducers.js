@@ -31,7 +31,7 @@ const dbSlice = createSlice({
                 const dbs = action.payload;
                 if (Array.isArray(dbs)) {
                     dbs.forEach((db) => {
-                        if (typeof db === "string") db = { id: db };
+                        if (typeof db === "string") db = { _id: db };
                         delete state.dbCache[db._id];
                     });
                 }
