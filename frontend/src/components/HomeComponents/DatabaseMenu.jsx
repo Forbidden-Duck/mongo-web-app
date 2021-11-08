@@ -24,8 +24,8 @@ function DatabaseMenu(props) {
     const [, , closeMenu, menuToggle, Menu] = useActionMenu();
 
     const middlewareClick = (func) => {
-        closeMenu();
         if (props.isAuthenticated) {
+            closeMenu();
             return func();
         }
     };
