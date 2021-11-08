@@ -18,7 +18,7 @@ const dbSlice = createSlice({
 
             // Add dbs
             .addCase(dbActions.addDBs, (state, action) => {
-                const { dbs } = action.payload;
+                const dbs = action.payload;
                 if (Array.isArray(dbs)) {
                     dbs.forEach((db) => {
                         state.dbCache[db.id] = { ...db, saved: false };
@@ -28,7 +28,7 @@ const dbSlice = createSlice({
 
             // Remove dbs
             .addCase(dbActions.removeDBs, (state, action) => {
-                const { dbs } = action.payload;
+                const dbs = action.payload;
                 if (Array.isArray(dbs)) {
                     dbs.forEach((db) => {
                         if (typeof db === "string") db = { id: db };
