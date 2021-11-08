@@ -25,7 +25,12 @@ import { Utils } from "@forbidden_duck/super-mongo";
 import NewDBComponent from "../../components/HomeComponents/NewDBComponent";
 import DatabaseMenu from "../../components/HomeComponents/DatabaseMenu";
 
-import { clearError, getAll } from "../../store/db/Db.actions";
+import {
+    clearError,
+    getAll,
+    addDBs,
+    removeDBs,
+} from "../../store/db/Db.actions";
 
 function Home() {
     const classes = makeStyles((theme) => ({
@@ -68,6 +73,7 @@ function Home() {
     const location = useLocation();
 
     const { isAuthenticated } = useSelector((state) => state.auth);
+    const { dbCache } = useSelector((state) => state.db);
 
     useEffect(() => {
         dispatch(clearError());
@@ -93,13 +99,6 @@ function Home() {
         return label;
     };
 
-    const [databases, setDatabases] = useState([
-        {
-            _id: "theid",
-            address: "howardfamily.ddns.net",
-            host: "888888888888888888",
-        },
-    ]);
     useEffect(() => {
         const identifier = location.pathname.split("/")[1];
         switch (identifier) {
@@ -107,7 +106,7 @@ function Home() {
                 _setTabValue("new");
                 break;
             default:
-                if (databases.find((db) => db._id === identifier))
+                if (Object.values(dbCache).find((db) => db._id === identifier))
                     _setTabValue(identifier);
                 else history.push("/");
                 break;
@@ -116,12 +115,12 @@ function Home() {
 
     const handleNewDatabase = (data) => {
         data._id = Utils.ID.create("SHA256");
-        setDatabases([...databases, data]);
+        dispatch(addDBs([data]));
         setTabValue("");
     };
     const handleDeleteDatabase = (id) => {
         setTabValue("");
-        setDatabases(databases.filter((db) => db._id !== id));
+        dispatch(removeDBs([id]));
     };
 
     return (
@@ -142,7 +141,7 @@ function Home() {
                             onClick={() => setTabValue("new")}
                         />
                         <Divider />
-                        {databases.map((db) => [
+                        {Object.values(dbCache).map((db) => [
                             <Tab
                                 label={
                                     <div
