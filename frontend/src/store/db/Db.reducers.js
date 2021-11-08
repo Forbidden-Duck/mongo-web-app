@@ -21,7 +21,7 @@ const dbSlice = createSlice({
                 const dbs = action.payload;
                 if (Array.isArray(dbs)) {
                     dbs.forEach((db) => {
-                        state.dbCache[db.id] = { ...db, saved: false };
+                        state.dbCache[db._id] = { ...db, saved: false };
                     });
                 }
             })
@@ -32,7 +32,7 @@ const dbSlice = createSlice({
                 if (Array.isArray(dbs)) {
                     dbs.forEach((db) => {
                         if (typeof db === "string") db = { id: db };
-                        delete state.dbCache[db.id];
+                        delete state.dbCache[db._id];
                     });
                 }
             })
