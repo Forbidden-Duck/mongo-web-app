@@ -12,9 +12,6 @@ export default function useAsync(callbackFn, deps) {
     const [value, setValue] = useState();
 
     const callbackFnMemoised = useCallback(() => {
-        setLoading(true);
-        setError(undefined);
-        setValue(undefined);
         callbackFn()
             .then(setValue)
             .catch(setError)
