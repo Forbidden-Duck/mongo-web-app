@@ -33,6 +33,7 @@ module.exports = (app, Mongo) => {
     require("../routes/auth")(apiRoute, Mongo);
     require("../routes/user")(apiRoute, Mongo);
     require("../routes/db")(apiRoute, Mongo);
+    require("../routes/mongodb")(apiRoute);
 
     app.use((req, res, next) => {
         if (process.env.NODE_ENV === "production") {
