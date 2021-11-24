@@ -21,7 +21,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import { Utils } from "@forbidden_duck/super-mongo";
 
-// TODO Component for viewing databases
+import ViewDatabaseComponent from "../../components/HomeComponents/ViewDatabaseComponent";
 import NewDBComponent from "../../components/HomeComponents/NewDBComponent";
 import DatabaseMenu from "../../components/HomeComponents/DatabaseMenu";
 
@@ -215,6 +215,14 @@ function Home() {
                             path="/new"
                             render={() => (
                                 <NewDBComponent onSubmit={handleNewDatabase} />
+                            )}
+                        />
+                        <Route
+                            path="/:dbid"
+                            render={() => (
+                                <ViewDatabaseComponent
+                                    database={dbCache[tabValue] || false}
+                                />
                             )}
                         />
                         <Route
