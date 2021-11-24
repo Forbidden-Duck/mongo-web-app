@@ -46,7 +46,7 @@ function NewDBComponent(props) {
     };
     const newDBSchema = Yup.object().shape({
         address: Yup.string().required("Address is required"),
-        host: Yup.string().required("Host is required"),
+        host: Yup.string(),
         username: Yup.string(),
         password: Yup.string(),
     });
