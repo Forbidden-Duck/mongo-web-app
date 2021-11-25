@@ -18,15 +18,19 @@ module.exports = (app) => {
 
     router.use(async (req, res, next) => {
         // Validate the schema
-        req.body = SuperMongo.Utils.Obj2Schema.compare(req.body, ClientSchema, {
-            noUndefined: true,
-        });
-        if (req.body.address === undefined || req.body.host === undefined) {
-            res.sendStatus(400);
+        req.query = SuperMongo.Utils.Obj2Schema.compare(
+            req.query,
+            ClientSchema,
+            {
+                noUndefined: true,
+            }
+        );
+        if (req.query.address === undefined || req.query.host === undefined) {
+            return res.sendStatus(400);
         }
         try {
             // Attempt to connect to the client
-            req.mongo = await new SuperMongo.MongoClient(req.body).connect();
+            req.mongo = await new SuperMongo.MongoClient(req.query).connect();
             next();
         } catch (err) {
             if (err.message.startsWith("connect ETIMEDOUT")) {
@@ -80,7 +84,7 @@ module.exports = (app) => {
         ) => {
             try {
                 const colls = await req.mongo.client
-                    .db(req.body.host)
+                    .db(req.query.host)
                     .listCollections()
                     .toArray();
                 res.status(200).send(colls);
@@ -117,7 +121,7 @@ module.exports = (app) => {
                     skip = parseInt(req.query.skip);
                 }
                 const colls = await req.mongo.client
-                    .db(req.body.host)
+                    .db(req.query.host)
                     .collection(req.params.collection)
                     .find()
                     .limit(limit)
