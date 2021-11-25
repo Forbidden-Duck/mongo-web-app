@@ -2,7 +2,8 @@ import API from "./";
 
 export const getDatabases = async (data) => {
     try {
-        return (await API.get("mongodb/databases")).data;
+        return (await API.get("mongodb/databases", { params: { ...data } }))
+            .data;
     } catch (err) {
         throw err.response.data;
     }
@@ -10,7 +11,8 @@ export const getDatabases = async (data) => {
 
 export const getCollections = async (data) => {
     try {
-        return (await API.get("mongodb/collections")).data;
+        return (await API.get("mongodb/collections", { params: { ...data } }))
+            .data;
     } catch (err) {
         throw err.response.data;
     }
@@ -22,7 +24,8 @@ export const getDocuments = async (data, filter) => {
     if (filter.skip) query.push(`skip=${filter.skip}`);
     try {
         return await API.get(
-            `mongodb/documents${query.length > 0 && `?${query.join("&")}`}`
+            `mongodb/documents${query.length > 0 && `?${query.join("&")}`}`,
+            { params: { ...data } }
         );
     } catch (err) {
         throw err.response.data;
