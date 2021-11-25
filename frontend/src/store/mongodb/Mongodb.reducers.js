@@ -6,9 +6,9 @@ const mongodbSlice = createSlice({
     initialState: {
         isPending: false,
         error: null,
-        databaseCache: [],
-        collectionCache: [],
-        documentCache: [],
+        databaseCache: null,
+        collectionCache: null,
+        documentCache: null,
     },
     reducers: {},
     extraReducers: (builder) => {
