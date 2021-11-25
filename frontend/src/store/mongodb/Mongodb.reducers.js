@@ -79,3 +79,5 @@ const mongodbSlice = createSlice({
             });
     },
 });
+
+export default mongodbSlice.reducer;
