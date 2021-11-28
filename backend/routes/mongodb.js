@@ -33,7 +33,10 @@ module.exports = (app) => {
             req.mongo = await new SuperMongo.MongoClient(req.query).connect();
             next();
         } catch (err) {
-            if (err.message.startsWith("connect ETIMEDOUT")) {
+            if (
+                err.message.startsWith("connect ETIMEDOUT") ||
+                err.message.startsWith("getaddrinfo ENOTFOUND")
+            ) {
                 res.status(500).send("Connection timed out");
             } else if (
                 err.message === "Failed to authenticate with the Database"
