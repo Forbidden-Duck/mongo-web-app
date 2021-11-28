@@ -21,6 +21,7 @@ const mongodbSlice = createSlice({
             // Get databases pending
             .addCase(mongodbActions.getDatabases.pending, (state) => {
                 state.isPending = true;
+                state.databaseCache = null;
             })
             // Get databases fulfilled
             .addCase(mongodbActions.getDatabases.fulfilled, (state, action) => {
@@ -39,6 +40,7 @@ const mongodbSlice = createSlice({
             // Get collections pending
             .addCase(mongodbActions.getCollections.pending, (state) => {
                 state.isPending = true;
+                state.collectionCache = null;
             })
             // Get collections fulfilled
             .addCase(
@@ -63,6 +65,7 @@ const mongodbSlice = createSlice({
             // Get documents pending
             .addCase(mongodbActions.getDocuments.pending, (state) => {
                 state.isPending = true;
+                state.documentCache = null;
             })
             // Get documents fulfilled
             .addCase(mongodbActions.getDocuments.fulfilled, (state, action) => {
