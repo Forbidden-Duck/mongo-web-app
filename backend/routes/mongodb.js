@@ -7,6 +7,9 @@ const ClientSchema = {
     host: SuperMongo.DataTypes.JSString,
     username: SuperMongo.DataTypes.JSString,
     password: SuperMongo.DataTypes.JSString,
+    dbname: SuperMongo.DataTypes.JSString,
+    limit: SuperMongo.DataTypes.JSString,
+    skip: SuperMongo.DataTypes.JSString,
 };
 
 /**
