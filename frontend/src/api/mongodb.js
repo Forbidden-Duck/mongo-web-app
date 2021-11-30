@@ -12,8 +12,8 @@ export const getDatabases = async (data) => {
 export const getCollections = async (data, dbName) => {
     try {
         return (
-            await API.get(`mongodb/collections?dbName=${dbName}`, {
-                params: { ...data },
+            await API.get("mongodb/collections", {
+                params: { ...data, dbName },
             })
         ).data;
     } catch (err) {
@@ -22,14 +22,10 @@ export const getCollections = async (data, dbName) => {
 };
 
 export const getDocuments = async (data, dbName, filter) => {
-    const query = [`dbName=${dbName}`];
-    if (filter.limit) query.push(`limit=${filter.limit}`);
-    if (filter.skip) query.push(`skip=${filter.skip}`);
     try {
-        return await API.get(
-            `mongodb/documents${query.length > 0 && `?${query.join("&")}`}`,
-            { params: { ...data } }
-        );
+        return await API.get(`mongodb/documents`, {
+            params: { ...data, limit: filter.limit, skip: filter.skip },
+        });
     } catch (err) {
         throw err.response.data;
     }
