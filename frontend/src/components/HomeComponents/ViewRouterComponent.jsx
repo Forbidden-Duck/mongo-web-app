@@ -6,7 +6,7 @@ import {
     Switch,
 } from "react-router-dom";
 import ViewDatabaseComponent from "../../components/HomeComponents/ViewDatabaseComponent";
-import ViewCollectionsComponent from "../../components/HomeComponents/ViewCollectionComponent";
+import ViewCollectionsComponent from "./ViewCollectionsComponent";
 
 function ViewRouterComponent(props) {
     return (
@@ -23,7 +23,7 @@ function ViewRouterComponent(props) {
                 />
                 <Route
                     exact
-                    path="/:dbid/:collection"
+                    path="/:dbid/:database"
                     render={() => (
                         <ViewCollectionsComponent
                             database={props.database || false}
