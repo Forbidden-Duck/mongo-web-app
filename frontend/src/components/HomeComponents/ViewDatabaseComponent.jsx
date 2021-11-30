@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
     CircularProgress,
@@ -54,6 +54,7 @@ function ViewDatabaseComponent(props) {
 
     const dispatch = useDispatch();
     const { dbid } = useParams();
+    const history = useHistory();
     const isTooSmall = useMediaQuery("(max-width:415px)");
 
     const { databaseCache, isPending, error } = useSelector(
@@ -69,7 +70,7 @@ function ViewDatabaseComponent(props) {
         setSelected(model[0]);
     };
     const handleDoubleClick = (model) => {
-        console.log("dc", model.id);
+        history.push(`/${dbid}/${model.id}`);
     };
 
     // Check the responses at any given time
@@ -89,7 +90,8 @@ function ViewDatabaseComponent(props) {
                     variant="contained"
                     color="primary"
                     disabled={!selected}
-                    onClick={() => console.log("view", selected)}
+                    LinkComponent={Link}
+                    to={`/${dbid}/${selected}`}
                 >
                     View Collections
                 </Button>

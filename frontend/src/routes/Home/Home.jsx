@@ -21,7 +21,7 @@ import {
 import { makeStyles } from "@mui/styles";
 import { Utils } from "@forbidden_duck/super-mongo";
 
-import ViewDatabaseComponent from "../../components/HomeComponents/ViewDatabaseComponent";
+import ViewRouterComponent from "../../components/HomeComponents/ViewRouterComponent";
 import NewDBComponent from "../../components/HomeComponents/NewDBComponent";
 import DatabaseMenu from "../../components/HomeComponents/DatabaseMenu";
 
@@ -220,8 +220,8 @@ function Home() {
                         <Route
                             path="/:dbid"
                             render={() => (
-                                <ViewDatabaseComponent
-                                    database={dbCache[tabValue] || false}
+                                <ViewRouterComponent
+                                    database={dbCache[tabValue]}
                                 />
                             )}
                         />
