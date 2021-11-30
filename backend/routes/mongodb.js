@@ -87,7 +87,7 @@ module.exports = (app) => {
         ) => {
             try {
                 const colls = await req.mongo.client
-                    .db(req.query.dbName || req.query.host)
+                    .db(req.query.dbname || req.query.host)
                     .listCollections()
                     .toArray();
                 res.status(200).send(colls);
@@ -124,7 +124,7 @@ module.exports = (app) => {
                     skip = parseInt(req.query.skip);
                 }
                 const colls = await req.mongo.client
-                    .db(req.query.dbName || req.query.host)
+                    .db(req.query.dbname || req.query.host)
                     .collection(req.params.collection)
                     .find()
                     .limit(limit)
