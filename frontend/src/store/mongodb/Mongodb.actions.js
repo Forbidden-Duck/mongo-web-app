@@ -12,18 +12,25 @@ export const getDatabases = createAsyncThunk(
 
 export const getCollections = createAsyncThunk(
     "mongodb/getCollections",
-    async (data, dbName) => {
+    async (data) => {
         return {
-            collections: await mongodbAPI.getCollections(data, dbName),
+            collections: await mongodbAPI.getCollections(
+                data.database,
+                data.dbName
+            ),
         };
     }
 );
 
 export const getDocuments = createAsyncThunk(
     "mongodb/getDocuments",
-    async (data, dbName, filter) => {
+    async (data) => {
         return {
-            documents: await mongodbAPI.getDocuments(data, dbName, filter),
+            documents: await mongodbAPI.getDocuments(
+                data.database,
+                data.dbName,
+                data.filter
+            ),
         };
     }
 );
