@@ -13,7 +13,7 @@ export const getCollections = async (data, dbName) => {
     try {
         return (
             await API.get("mongodb/collections", {
-                params: { ...data, dbName },
+                params: { ...data, dbname: dbName },
             })
         ).data;
     } catch (err) {
@@ -24,7 +24,12 @@ export const getCollections = async (data, dbName) => {
 export const getDocuments = async (data, dbName, filter) => {
     try {
         return await API.get(`mongodb/documents`, {
-            params: { ...data, limit: filter.limit, skip: filter.skip },
+            params: {
+                ...data,
+                dbname: dbName,
+                limit: filter.limit,
+                skip: filter.skip,
+            },
         });
     } catch (err) {
         throw err.response.data;
