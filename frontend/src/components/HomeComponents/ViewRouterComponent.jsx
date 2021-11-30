@@ -4,8 +4,6 @@ import {
     Route,
     Redirect,
     Switch,
-    useHistory,
-    useLocation,
 } from "react-router-dom";
 import ViewDatabaseComponent from "../../components/HomeComponents/ViewDatabaseComponent";
 import ViewCollectionsComponent from "../../components/HomeComponents/ViewCollectionComponent";
