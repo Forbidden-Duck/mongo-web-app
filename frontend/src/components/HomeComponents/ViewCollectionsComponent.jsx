@@ -17,6 +17,8 @@ import {
     getCollections,
 } from "../../store/mongodb/Mongodb.actions";
 
+const gridColumns = [{ field: "name", headerName: "Name", width: 275 }];
+
 /**
  * @typedef {object} ViewCollectionComponentProps
  * @property {object} database
@@ -36,6 +38,11 @@ function ViewCollectionsComponent(props) {
         },
         fullWidth: {
             width: "90%",
+        },
+        elGap: {
+            "& *:not(:last-child)": {
+                marginRight: "5px",
+            },
         },
         gridContainer: {
             width: "100%",
@@ -71,6 +78,11 @@ function ViewCollectionsComponent(props) {
     const handleDoubleClick = (model) => {
         console.log(model.id);
     };
+    const handleRefreshClick = () => {
+        dispatch(
+            getCollections({ database: props.database, dbName: database })
+        );
+    };
 
     // Check the responses at any given time
     console.log("c", collectionCache);
@@ -78,7 +90,69 @@ function ViewCollectionsComponent(props) {
     console.log("e", error);
     console.log("s", selected);
 
-    return <p>hi</p>;
+    return props.database === false ? (
+        <Typography style={{ color: "red" }}>
+            There was an error loading the database
+        </Typography>
+    ) : collectionCache && !isPending && !error ? (
+        <div className={`${classes.centerFlex} ${classes.gridContainer}`}>
+            <div
+                className={`${classes.fullWidth} ${classes.elGap}`}
+                style={{ marginBottom: "10px" }}
+            >
+                <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={!selected}
+                    LinkComponent={Link}
+                    to={`/${dbid}/${database}/${selected}`}
+                >
+                    {isTooSmall ? "View" : "View Documents"}
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleRefreshClick}
+                >
+                    Refresh
+                </Button>
+                <Button
+                    variant="contained"
+                    color="error"
+                    LinkComponent={Link}
+                    to={`/${dbid}`}
+                >
+                    Back
+                </Button>
+            </div>
+            <DataGrid
+                className={classes.grid}
+                components={{
+                    Toolbar: !isTooSmall && GridToolbar,
+                }}
+                columns={gridColumns}
+                rows={collectionCache.map((col, index) => ({
+                    id: col.name,
+                    name: col.name,
+                }))}
+                rowsPerPageOptions={[10, 25, 50, 100]}
+                onSelectionModelChange={handleNewSelected}
+                onCellDoubleClick={handleDoubleClick}
+            />
+        </div>
+    ) : error ? (
+        <div className={classes.centerFlex}>
+            <Typography>
+                There was an error when connecting to the database
+            </Typography>
+            <Typography style={{ color: "red" }}>{error}</Typography>
+        </div>
+    ) : (
+        <div className={classes.centerFlex}>
+            <CircularProgress style={{ marginBottom: "10px" }} />
+            <Typography>Loading...</Typography>
+        </div>
+    );
 }
 
 export default ViewCollectionsComponent;
