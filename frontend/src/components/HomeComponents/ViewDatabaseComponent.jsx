@@ -40,6 +40,11 @@ function ViewDatabaseComponent(props) {
         fullWidth: {
             width: "90%",
         },
+        elGap: {
+            "& *:not(:last-child)": {
+                marginRight: "5px",
+            },
+        },
         gridContainer: {
             width: "100%",
             height: "90%",
@@ -72,6 +77,9 @@ function ViewDatabaseComponent(props) {
     const handleDoubleClick = (model) => {
         history.push(`/${dbid}/${model.id}`);
     };
+    const handleRefreshClick = () => {
+        dispatch(getDatabases(props.database));
+    };
 
     // Check the responses at any given time
     console.log("c", databaseCache);
@@ -85,7 +93,10 @@ function ViewDatabaseComponent(props) {
         </Typography>
     ) : databaseCache && !isPending && !error ? (
         <div className={`${classes.centerFlex} ${classes.gridContainer}`}>
-            <div className={classes.fullWidth} style={{ marginBottom: "10px" }}>
+            <div
+                className={`${classes.fullWidth} ${classes.elGap}`}
+                style={{ marginBottom: "10px" }}
+            >
                 <Button
                     variant="contained"
                     color="primary"
@@ -93,7 +104,14 @@ function ViewDatabaseComponent(props) {
                     LinkComponent={Link}
                     to={`/${dbid}/${selected}`}
                 >
-                    View Collections
+                    {isTooSmall ? "View" : "View Collections"}
+                </Button>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={handleRefreshClick}
+                >
+                    Refresh
                 </Button>
             </div>
             <DataGrid
