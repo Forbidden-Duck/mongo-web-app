@@ -93,6 +93,12 @@ module.exports = (app) => {
                     .db(req.query.dbname || req.query.host)
                     .listCollections()
                     .toArray();
+                for (const index in colls) {
+                    colls[index].stats = await req.mongo.client
+                        .db(req.query.dbname || req.query.host)
+                        .collection(colls[index].name)
+                        .stats();
+                }
                 res.status(200).send(colls);
             } catch (err) {
                 if (
