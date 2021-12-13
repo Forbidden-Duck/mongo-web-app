@@ -29,6 +29,7 @@ export const getDocuments = createAsyncThunk(
             documents: await mongodbAPI.getDocuments(
                 data.database,
                 data.dbName,
+                data.collName,
                 data.filter
             ),
         };

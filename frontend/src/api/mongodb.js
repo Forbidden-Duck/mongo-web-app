@@ -21,9 +21,9 @@ export const getCollections = async (data, dbName) => {
     }
 };
 
-export const getDocuments = async (data, dbName, filter) => {
+export const getDocuments = async (data, dbName, collName, filter) => {
     try {
-        return await API.get(`mongodb/documents`, {
+        return await API.get(`mongodb/collection/${collName}`, {
             params: {
                 ...data,
                 dbname: dbName,
