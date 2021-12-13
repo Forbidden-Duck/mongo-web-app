@@ -17,7 +17,11 @@ import {
     getCollections,
 } from "../../store/mongodb/Mongodb.actions";
 
-const gridColumns = [{ field: "name", headerName: "Name", width: 275 }];
+const gridColumns = [
+    { field: "name", headerName: "Name", width: 275 },
+    { field: "count", headerName: "Count", width: 150 },
+    { field: "size", headerName: "Size", width: 150 },
+];
 
 /**
  * @typedef {object} ViewCollectionComponentProps
@@ -134,6 +138,8 @@ function ViewCollectionsComponent(props) {
                 rows={collectionCache.map((col, index) => ({
                     id: col.name,
                     name: col.name,
+                    count: col.stats.count,
+                    size: bytesToUnit(col.stats.size),
                 }))}
                 rowsPerPageOptions={[10, 25, 50, 100]}
                 onSelectionModelChange={handleNewSelected}
