@@ -27,10 +27,10 @@ export const getDocuments = async (data, dbName, collName, filter) => {
             params: {
                 ...data,
                 dbname: dbName,
-                limit: filter.limit,
-                skip: filter.skip,
+                limit: filter && filter?.limit,
+                skip: filter && filter?.skip,
             },
-        });
+        }).data;
     } catch (err) {
         throw err.response.data;
     }
