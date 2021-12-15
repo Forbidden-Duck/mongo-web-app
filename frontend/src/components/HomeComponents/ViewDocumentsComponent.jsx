@@ -1,5 +1,7 @@
 import React from "react";
 
+import objectMap from "../../utils/objectMap";
+
 /**
  * @typedef {object} ViewDocumentComponentProps
  * @property {object} database
