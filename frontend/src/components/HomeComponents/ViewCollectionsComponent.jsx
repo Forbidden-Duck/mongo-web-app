@@ -80,7 +80,7 @@ function ViewCollectionsComponent(props) {
         setSelected(model[0]);
     };
     const handleDoubleClick = (model) => {
-        console.log(model.id);
+        history.push(`/${dbid}/${database}/${model.id}`);
     };
     const handleRefreshClick = () => {
         dispatch(
