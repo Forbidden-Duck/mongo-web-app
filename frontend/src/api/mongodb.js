@@ -23,14 +23,16 @@ export const getCollections = async (data, dbName) => {
 
 export const getDocuments = async (data, dbName, collName, filter) => {
     try {
-        return await API.get(`mongodb/collection/${collName}`, {
-            params: {
-                ...data,
-                dbname: dbName,
-                limit: filter && filter?.limit,
-                skip: filter && filter?.skip,
-            },
-        }).data;
+        return (
+            await API.get(`mongodb/collection/${collName}`, {
+                params: {
+                    ...data,
+                    dbname: dbName,
+                    limit: filter && filter?.limit,
+                    skip: filter && filter?.skip,
+                },
+            })
+        ).data;
     } catch (err) {
         throw err.response.data;
     }
