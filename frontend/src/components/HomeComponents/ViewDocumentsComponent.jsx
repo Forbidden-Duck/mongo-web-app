@@ -123,7 +123,7 @@ function ViewDocumentsComponent(props) {
                     (key) => ({
                         field: key,
                         headerName: key,
-                        width: 150,
+                        width: key.length >= 15 ? 200 : 150,
                     })
                 )}
                 rows={documentCache.map((doc) => ({
