@@ -3,6 +3,7 @@
  * @param {object} obj
  */
 const objectMap = function (obj, _parents = []) {
+    if (!obj) return {};
     let map = {};
     for (const [key, value] of Object.entries(obj)) {
         // Key is not an array but is an object
