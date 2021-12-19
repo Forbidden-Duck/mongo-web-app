@@ -66,6 +66,9 @@ function ViewDocumentsComponent(props) {
                 database: props.database,
                 dbName: database,
                 collName: collection,
+                filter: {
+                    limit: 100000,
+                },
             })
         );
     }, [dispatch]);
