@@ -6,6 +6,7 @@ import {
     Typography,
     useMediaQuery,
     Button,
+    Tooltip,
 } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { makeStyles } from "@mui/styles";
@@ -48,6 +49,11 @@ function ViewDocumentsComponent(props) {
             color: "inherit",
             padding: "0px 10px",
             width: "90%",
+        },
+        tableCell: {
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
         },
     }))();
 
@@ -124,6 +130,23 @@ function ViewDocumentsComponent(props) {
                         field: key,
                         headerName: key,
                         width: key.length >= 15 ? 200 : 150,
+                        renderCell: (params) => (
+                            <Tooltip
+                                title={params.row[key]}
+                                enterTouchDelay={500}
+                            >
+                                <div className={classes.tableCell}>
+                                    {params.row[key]}
+                                </div>
+                            </Tooltip>
+                        ),
+                        renderHeader: (params) => (
+                            <Tooltip title={params.field} enterTouchDelay={0}>
+                                <div className={classes.tableCell}>
+                                    {params.field}
+                                </div>
+                            </Tooltip>
+                        ),
                     })
                 )}
                 rows={documentCache.map((doc) => ({
