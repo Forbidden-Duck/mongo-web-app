@@ -3,7 +3,16 @@ import { Utils } from "@forbidden_duck/super-mongo";
 
 export const all = async () => {
     try {
-        return (await API.get("dbs")).data;
+        const data = (await API.get("dbs")).data;
+        if (Array.isArray(data)) {
+            for (const index in data) {
+                data[index].password =
+                    typeof data[index].password === "string"
+                        ? Utils.Base64.decode(data[index].password)
+                        : data[index].password;
+            }
+        }
+        return data;
     } catch (err) {
         throw err.response.data;
     }
@@ -11,7 +20,12 @@ export const all = async () => {
 
 export const get = async (data) => {
     try {
-        return (await API.get(`db/${data.id}`)).data;
+        const data = (await API.get(`db/${data.id}`)).data;
+        data.password =
+            typeof data.password === "string"
+                ? Utils.Base64.decode(data.password)
+                : data.password;
+        return data;
     } catch (err) {
         throw err.response.data;
     }
