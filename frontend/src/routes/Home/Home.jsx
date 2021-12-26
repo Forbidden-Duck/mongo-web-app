@@ -187,6 +187,7 @@ function Home() {
                                                     horizontal: "center",
                                                 }}
                                                 keepMounted
+                                                database={db}
                                                 isAuthenticated={
                                                     isAuthenticated
                                                 }

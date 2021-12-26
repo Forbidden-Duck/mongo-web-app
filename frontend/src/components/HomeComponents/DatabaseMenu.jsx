@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Typography, IconButton, MenuItem, Tooltip } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,8 +11,11 @@ import {
 
 import useActionMenu from "../../hooks/useActionMenu/useActionMenu";
 
+import { createOne, deleteOne } from "../../store/db/Db.actions";
+
 /**
  * @typedef {object} DatabaseMenuProps
+ * @property {object} database
  * @property {boolean} isAuthenticated
  * @property {boolean} handleDelete
  */
@@ -22,6 +26,8 @@ import useActionMenu from "../../hooks/useActionMenu/useActionMenu";
  */
 function DatabaseMenu(props) {
     const [, , closeMenu, menuToggle, Menu] = useActionMenu();
+    const dispatch = useDispatch();
+    const { error } = useSelector((state) => state.db);
 
     const middlewareClick = (func) => {
         if (props.isAuthenticated) {
@@ -30,8 +36,23 @@ function DatabaseMenu(props) {
         }
     };
     const handleSave = () => {
-        middlewareClick(() => {
-            console.log("save clicked");
+        middlewareClick(async () => {
+            if (props.database.saved) {
+                dispatch(deleteOne({ id: props.database._id }));
+            } else {
+                dispatch(
+                    createOne({
+                        db: {
+                            address: props.database.address,
+                            host: props.database.host,
+                            username: props.database.username,
+                            password: props.database.password,
+                            favourite: false,
+                        },
+                    })
+                );
+                props.handleDelete();
+            }
         });
     };
     const handleFavourite = () => {
@@ -62,7 +83,7 @@ function DatabaseMenu(props) {
                     >
                         <Typography>
                             <FontAwesomeIcon icon={faSave} />
-                            &nbsp;Save
+                            &nbsp;{props.database.saved ? "Unsave" : "Save"}
                         </Typography>
                     </MenuItem>
                 </Tooltip>
@@ -81,7 +102,10 @@ function DatabaseMenu(props) {
                     >
                         <Typography>
                             <FontAwesomeIcon icon={faStar} />
-                            &nbsp;Favourite
+                            &nbsp;
+                            {props.database?.favourite
+                                ? "Unfavourite"
+                                : "Favourite"}
                         </Typography>
                     </MenuItem>
                 </Tooltip>
