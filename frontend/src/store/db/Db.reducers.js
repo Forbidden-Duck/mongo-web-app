@@ -120,6 +120,7 @@ const dbSlice = createSlice({
                 const { dbid } = action.payload;
                 state.isPending = false;
                 state.error = null;
+                state.dbCache[dbid].saved = false;
             })
             // Delete db rejected
             .addCase(dbActions.deleteOne.rejected, (state, action) => {
