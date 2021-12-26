@@ -84,7 +84,7 @@ module.exports = (app, Mongo) => {
                 validationSchema,
                 { noUndefined: true, strictMode: { strictType: true } }
             );
-            if (!req.bodyParsed.address || !req.bodyParsed.host) {
+            if (!req.bodyParsed.address) {
                 res.sendStatus(400);
             } else if (
                 (req.bodyParsed.username && !req.bodyParsed.password) ||
