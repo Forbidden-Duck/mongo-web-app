@@ -10,7 +10,9 @@ const objectMap = function (obj, _parents = []) {
         if (typeof value === "object" && !Array.isArray(value)) {
             map = { ...map, ...objectMap(value, [..._parents, key]) };
         } else {
-            map[[..._parents, key].join(".")] = value;
+            map[[..._parents, key].join(".")] = Array.isArray(value)
+                ? value.join(",")
+                : value;
         }
     }
     return map;
