@@ -19,9 +19,9 @@ export const get = async (data) => {
 
 export const create = async (data) => {
     try {
-        data.password = !!data.password
-            ? Utils.Base64.encode(data.password)
-            : data.password;
+        data.db.password = !!data.db.password
+            ? Utils.Base64.encode(data.db.password)
+            : data.db.password;
         return (await API.post("db", data.db)).data;
     } catch (err) {
         throw err.response.data;
@@ -30,9 +30,9 @@ export const create = async (data) => {
 
 export const update = async (data) => {
     try {
-        data.password = !!data.password
-            ? Utils.Base64.encode(data.password)
-            : data.password;
+        data.db.password = !!data.db.password
+            ? Utils.Base64.encode(data.db.password)
+            : data.db.password;
         return (await API.put(`db/${data.id}`, data.db)).data;
     } catch (err) {
         throw err.response.data;
