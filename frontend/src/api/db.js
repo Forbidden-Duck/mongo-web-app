@@ -20,12 +20,12 @@ export const all = async () => {
 
 export const get = async (data) => {
     try {
-        const data = (await API.get(`db/${data.id}`)).data;
-        data.password =
-            typeof data.password === "string"
-                ? Utils.Base64.decode(data.password)
-                : data.password;
-        return data;
+        const data1 = (await API.get(`db/${data.id}`)).data;
+        data1.password =
+            typeof data1.password === "string"
+                ? Utils.Base64.decode(data1.password)
+                : data1.password;
+        return data1;
     } catch (err) {
         throw err.response.data;
     }
