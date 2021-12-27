@@ -16,7 +16,7 @@ import {
     Divider,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { Utils } from "@forbidden_duck/super-mongo";
+import cryptojs from "crypto-js";
 
 import ViewRouterComponent from "../../components/HomeComponents/ViewRouterComponent";
 import NewDBComponent from "../../components/HomeComponents/NewDBComponent";
@@ -111,7 +111,12 @@ function Home() {
     }, []);
 
     const handleNewDatabase = (data) => {
-        data._id = Utils.ID.create("SHA256");
+        data._id = cryptojs
+            .SHA256(
+                Math.floor(Math.random() * 999999999) +
+                    new Date().getTime().toString()
+            )
+            .toString();
         dispatch(addDBs([data]));
         setTabValue("");
     };

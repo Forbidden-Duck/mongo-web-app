@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Form, Formik } from "formik";
-import { Utils, DataTypes } from "@forbidden_duck/super-mongo";
+import * as Obj2Schema from "../../utils/object2schema";
 
 import Button from "../ActionButton/ActionButton";
 import TextField from "../FormikTextField/FormikTextField";
@@ -59,9 +59,9 @@ function ProfileComponent(props) {
     const handleUpdateUser = async (data, { setFieldValue }) => {
         if (!data.username && !data.email) return;
         // Force data to only allow username and email and delete undefined values
-        data = Utils.Obj2Schema.compare(
+        data = Obj2Schema.compare(
             data,
-            { username: DataTypes.JSString, email: DataTypes.JSString },
+            { username: String, email: String },
             { noUndefined: true }
         );
         if (data.username.length === 0) delete data.username;
