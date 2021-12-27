@@ -11,7 +11,12 @@ import {
 
 import useActionMenu from "../../hooks/useActionMenu/useActionMenu";
 
-import { createOne, deleteOne } from "../../store/db/Db.actions";
+import {
+    createOne,
+    deleteOne,
+    updateOne,
+    toggleFavourite,
+} from "../../store/db/Db.actions";
 
 /**
  * @typedef {object} DatabaseMenuProps
@@ -47,7 +52,7 @@ function DatabaseMenu(props) {
                             host: props.database.host,
                             username: props.database.username,
                             password: props.database.password,
-                            favourite: false,
+                            favourite: !!props.database.favourite,
                         },
                     })
                 );
@@ -56,7 +61,18 @@ function DatabaseMenu(props) {
         });
     };
     const handleFavourite = () => {
-        middlewareClick(() => console.log("favourite clicked"));
+        middlewareClick(() => {
+            if (props.database.saved) {
+                dispatch(
+                    updateOne({
+                        id: props.database._id,
+                        db: { favourite: !props.database?.favourite },
+                    })
+                );
+            } else {
+                dispatch(toggleFavourite(props.database._id));
+            }
+        });
     };
 
     const menuProps = { ...props };
