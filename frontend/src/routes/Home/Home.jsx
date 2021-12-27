@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
     BrowserRouter as Router,
     Route,
-    Redirect,
     Switch,
     useHistory,
     useLocation,
@@ -14,9 +13,7 @@ import {
     Box,
     useMediaQuery,
     Typography,
-    MenuItem,
     Divider,
-    IconButton,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Utils } from "@forbidden_duck/super-mongo";
