@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { Form, Formik } from "formik";
-import * as Obj2Schema from "../../utils/object2schema";
 
 import Button from "../ActionButton/ActionButton";
 import TextField from "../FormikTextField/FormikTextField";
@@ -58,15 +57,11 @@ function ProfileComponent(props) {
 
     const handleUpdateUser = async (data, { setFieldValue }) => {
         if (!data.username && !data.email) return;
-        // Force data to only allow username and email and delete undefined values
-        data = Obj2Schema.compare(
-            data,
-            { username: String, email: String },
-            { noUndefined: true }
-        );
         if (data.username.length === 0) delete data.username;
         if (data.email.length === 0) delete data.email;
-        await dispatch(updateUser(data));
+        await dispatch(
+            updateUser({ username: data.username, email: data.email })
+        );
         setFieldValue("username", "");
         setFieldValue("email", "");
     };
