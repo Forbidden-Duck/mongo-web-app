@@ -1,2 +1,2 @@
 GENERATE_SOURCEMAP=false npm run build
-pause
+read -n1 -r -p "Press any key to continue..." key
