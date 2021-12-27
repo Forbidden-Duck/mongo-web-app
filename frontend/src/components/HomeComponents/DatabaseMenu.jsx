@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Typography, IconButton, MenuItem, Tooltip } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -32,7 +32,6 @@ import {
 function DatabaseMenu(props) {
     const [, , closeMenu, menuToggle, Menu] = useActionMenu();
     const dispatch = useDispatch();
-    const { error } = useSelector((state) => state.db);
 
     const middlewareClick = (func) => {
         if (props.isAuthenticated) {
