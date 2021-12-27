@@ -37,3 +37,5 @@ export const clearError = createAction("db/clearError");
 export const addDBs = createAction("db/addDBs");
 
 export const removeDBs = createAction("db/removeDBs");
+
+export const toggleFavourite = createAction("db/toggleFavourite");

@@ -37,6 +37,12 @@ const dbSlice = createSlice({
                 }
             })
 
+            // Toggle favourite
+            .addCase(dbActions.toggleFavourite, (state, action) => {
+                state.dbCache[action.payload].favourite =
+                    !state.dbCache[action.payload].favourite;
+            })
+
             // Get all pending
             .addCase(dbActions.getAll.pending, (state) => {
                 state.isPending = true;
