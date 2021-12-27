@@ -36,7 +36,7 @@ function DatabaseMenu(props) {
         }
     };
     const handleSave = () => {
-        middlewareClick(async () => {
+        middlewareClick(() => {
             if (props.database.saved) {
                 dispatch(deleteOne({ id: props.database._id }));
             } else {
