@@ -34,7 +34,11 @@ module.exports = (app) => {
                         "https://fonts.googleapis.com",
                         "'unsafe-inline'",
                     ],
-                    imgSrc: ["'self'", "data:"],
+                    imgSrc: [
+                        "'self'",
+                        "data:",
+                        "https://webassets.mongodb.com/",
+                    ],
                     fontSrc: ["'self'", "https://fonts.gstatic.com"],
                 },
             },
