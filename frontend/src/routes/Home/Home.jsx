@@ -141,72 +141,83 @@ function Home() {
                             onClick={() => setTabValue("new")}
                         />
                         <Divider />
-                        {Object.values(dbCache).map((db) => [
-                            <Tab
-                                label={
-                                    <div
-                                        style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            width: "100%",
-                                        }}
-                                    >
+                        {Object.values(dbCache)
+                            .sort((a, b) =>
+                                !!a.favourite === !!b.favourite
+                                    ? 0
+                                    : !!a.favourite
+                                    ? -1
+                                    : 1
+                            )
+                            .map((db) => [
+                                <Tab
+                                    label={
                                         <div
                                             style={{
                                                 display: "flex",
-                                                justifyContent: "flex-start",
+                                                alignItems: "center",
                                                 width: "100%",
                                             }}
                                         >
-                                            <Typography
-                                                variant="body2"
-                                                onClick={() =>
-                                                    setTabValue(db._id)
-                                                }
+                                            <div
+                                                style={{
+                                                    display: "flex",
+                                                    justifyContent:
+                                                        "flex-start",
+                                                    width: "100%",
+                                                }}
                                             >
-                                                {limitLabelLength(
-                                                    db.host || db.address
-                                                )}
-                                            </Typography>
-                                        </div>
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                justifyContent: "flex-end",
-                                                width: "100%",
-                                            }}
-                                        >
-                                            <DatabaseMenu
-                                                id={`${db._id}-select`}
-                                                anchorOrigin={{
-                                                    vertical: "bottom",
-                                                    horizontal: "center",
+                                                <Typography
+                                                    variant="body2"
+                                                    onClick={() =>
+                                                        setTabValue(db._id)
+                                                    }
+                                                >
+                                                    {limitLabelLength(
+                                                        db.host || db.address
+                                                    )}
+                                                </Typography>
+                                            </div>
+                                            <div
+                                                style={{
+                                                    display: "flex",
+                                                    justifyContent: "flex-end",
+                                                    width: "100%",
                                                 }}
-                                                transformOrigin={{
-                                                    vertical: "top",
-                                                    horizontal: "center",
-                                                }}
-                                                keepMounted
-                                                database={db}
-                                                isAuthenticated={
-                                                    isAuthenticated
-                                                }
-                                                handleDelete={() =>
-                                                    handleDeleteDatabase(db._id)
-                                                }
-                                            />
+                                            >
+                                                <DatabaseMenu
+                                                    id={`${db._id}-select`}
+                                                    anchorOrigin={{
+                                                        vertical: "bottom",
+                                                        horizontal: "center",
+                                                    }}
+                                                    transformOrigin={{
+                                                        vertical: "top",
+                                                        horizontal: "center",
+                                                    }}
+                                                    keepMounted
+                                                    database={db}
+                                                    isAuthenticated={
+                                                        isAuthenticated
+                                                    }
+                                                    handleDelete={() =>
+                                                        handleDeleteDatabase(
+                                                            db._id
+                                                        )
+                                                    }
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                }
-                                value={db._id}
-                                sx={{
-                                    textTransform: "unset",
-                                    fontSize: ".7em",
-                                    fontWeight: "500",
-                                }}
-                            />,
-                            <Divider />,
-                        ])}
+                                    }
+                                    value={db._id}
+                                    sx={{
+                                        textTransform: "unset",
+                                        fontSize: ".7em",
+                                        fontWeight: "500",
+                                    }}
+                                />,
+                                <Divider />,
+                            ])}
                     </Tabs>
                 </Box>
                 <div className={classes.content}>
