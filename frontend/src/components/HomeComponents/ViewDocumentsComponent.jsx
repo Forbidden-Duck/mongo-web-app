@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useHistory, Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
     CircularProgress,
@@ -59,7 +59,6 @@ function ViewDocumentsComponent(props) {
 
     const dispatch = useDispatch();
     const { dbid, database, collection } = useParams();
-    const history = useHistory();
     const isTooSmall = useMediaQuery("(max-width:415px)");
 
     const { documentCache, isPending, error } = useSelector(
