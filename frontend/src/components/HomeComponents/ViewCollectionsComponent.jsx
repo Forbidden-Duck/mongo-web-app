@@ -88,12 +88,6 @@ function ViewCollectionsComponent(props) {
         );
     };
 
-    // Check the responses at any given time
-    console.log("c", collectionCache);
-    console.log("p", isPending);
-    console.log("e", error);
-    console.log("s", selected);
-
     return props.database === false ? (
         <Typography style={{ color: "red" }}>
             There was an error loading the database

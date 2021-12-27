@@ -89,11 +89,6 @@ function ViewDocumentsComponent(props) {
         );
     };
 
-    // Check the responses at any given time
-    console.log("c", documentCache);
-    console.log("p", isPending);
-    console.log("e", error);
-
     return props.database === false ? (
         <Typography style={{ color: "red" }}>
             There was an error loading the database

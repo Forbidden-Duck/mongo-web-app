@@ -81,12 +81,6 @@ function ViewDatabaseComponent(props) {
         dispatch(getDatabases(props.database));
     };
 
-    // Check the responses at any given time
-    console.log("c", databaseCache);
-    console.log("p", isPending);
-    console.log("e", error);
-    console.log("s", selected);
-
     return props.database === false ? (
         <Typography style={{ color: "red" }}>
             There was an error finding that database
