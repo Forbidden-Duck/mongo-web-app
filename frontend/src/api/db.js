@@ -23,7 +23,7 @@ export const get = async (data) => {
         const data1 = (await API.get(`db/${data.id}`)).data;
         data1.password =
             typeof data1.password === "string"
-                ? Base64.decode(data.password)
+                ? Base64.decode(data1.password)
                 : data1.password;
         return data1;
     } catch (err) {
