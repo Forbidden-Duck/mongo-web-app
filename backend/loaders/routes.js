@@ -29,7 +29,7 @@ module.exports = (app, Mongo) => {
         next();
     });
 
-    app.use("/api", apiRoute);
+    app.use(process.env.ROUTE || "/api", apiRoute);
     require("../routes/auth")(apiRoute, Mongo);
     require("../routes/user")(apiRoute, Mongo);
     require("../routes/db")(apiRoute, Mongo);
